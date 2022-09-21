@@ -6,7 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 let flag;
 function preload() {
-  flag = loadImage("flag-icons-main/flags/4x3/ar.svg");
+  flag = loadImage("flag-icons-main/flags/4x3/bq.svg");
 }
 
 function setup() {
