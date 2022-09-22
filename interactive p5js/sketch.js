@@ -6,13 +6,17 @@
 // - describe what you did to take this project "above and beyond"
 let flag;
 function preload() {
-  flag = loadImage("flag-icons-main/flags/4x3/France.svg");
+  flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  image(flag, windowWidth/2, windowHeight/2);
+  image(flag, (windowWidth/2 - flag.width/2), (windowHeight/2 - flag.height/2));
 }
 
 function draw() {
+}
+
+function flagname() {
+  
 }
