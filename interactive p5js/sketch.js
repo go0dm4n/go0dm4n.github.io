@@ -8,7 +8,7 @@ let flag;
 let bgi;
 function preload(flagname) {
   flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
-  bgi = loadImage("turkeybg.png");
+  bgi = loadImage("flag-icons-main/background.jpg");
 }
 
 function setup() {
