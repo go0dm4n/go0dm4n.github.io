@@ -4,21 +4,72 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
+
 let flag;
 let bgi;
+let logo;
+
+let fname = "Canada";
+let textsize = 50;
+let total = 209
+let gameon = false; // game state
+let score = "0";
+let progress = 0;
+
 function preload() {
-  flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
-  bgi = loadImage("flag-icons-main/background.jpg");
+  bgi = loadImage("allflags.png")
+  logo = loadImage("logo.png")
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  
+  doflag();
+
+  image(bgi, 0, 0, windowWidth, windowHeight); // background image
+
+  image(flag, (windowWidth/2 - flag.width/2), (windowHeight/2 - flag.height/2)); // main flag
+
 }
 
 function draw() {
-  image(flag, windowWidth/2 - flag.Width/2, windowHeight/2 - flag.Height/2);
+  mainmenu();
+  drawScore();
 }
 
-function flagname() { // selects 4 random flag names
-  
+function doflag() {
+  flag = loadImage("flag-icons-main/flags/4x3/" + fname + ".svg");
+}
+
+function drawScore() {
+  if (gameon === true){
+    fill(255);
+    rect(20, 10, textsize * 3, 50); // background rectangle for score
+
+    fill(0)
+    textSize(textsize);
+    text(score, 20, 0 + textsize); // score text
+
+    textSize(textsize);
+    text("/" + total, 60 , 0 + textsize); // denominator
+  }
+}
+
+function mainmenu(){
+  if (gameon === false){
+    image(logo, (windowWidth/2 - logo.width/2), (windowHeight/2 - logo.height/2 - 150)); // logo
+
+    fill(255);
+    rect(windowWidth/2 - logo.width/2, windowHeight - 300, logo.width, 50); // start button rectangle
+
+    fill(255, 0, 255)
+    textSize(textsize);
+    text("Start Game", windowWidth/2 - logo.width/2, 0 + windowheight - 300); // start text
+  }
+}
+
+function mousePressed(){
+  if (mouseX > (windowWidth/2 - logo.width/2) && mouseX < (windowWidth/2 + logo.width/2) && mouseY > (windowheight - 300) && mouseY < (windowHeight - 350 && gameon === False)){
+    gameon = true
+  }
 }
