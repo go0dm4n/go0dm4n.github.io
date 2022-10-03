@@ -15,6 +15,10 @@ let total = 209
 let gameon = false; // game state
 let score = "0";
 let progress = 0;
+let c1;
+let c2;
+let c3;
+let c4;
 
 function preload() {
   bgi = loadImage("allflags.png")
@@ -64,12 +68,33 @@ function mainmenu(){
 
     fill(255, 0, 255)
     textSize(textsize);
-    text("Start Game", windowWidth/2 - logo.width/2, 0 + windowheight - 300); // start text
+    text("Start Game", windowWidth/2 - logo.width/2 + 500, windowheight - 300); // start text
   }
 }
 
 function mousePressed(){
-  if (mouseX > (windowWidth/2 - logo.width/2) && mouseX < (windowWidth/2 + logo.width/2) && mouseY > (windowheight - 300) && mouseY < (windowHeight - 350 && gameon === False)){
+  if (gameon === False && mouseX > (windowWidth/2 - logo.width/2) && mouseX < (windowWidth/2 + logo.width/2) && mouseY > (windowheight - 300) && mouseY < (windowHeight - 350)){
     gameon = true
+
+  if (gameon === True && correct === c1 && "INSERT PARAMETERS FOR C1"){}
+
+  if (gameon === True && correct === c1 && "INSERT PARAMETERS FOR C2"){}
+
+  if (gameon === True && correct === c1 && "INSERT PARAMETERS FOR C3"){}
+
+  if (gameon === True && correct === c1 && "INSERT PARAMETERS FOR C4"){}
   }
 }
+
+function randflag(){
+  if (gameon === True) {
+    let options = [c1, c2, c3, c4] 
+    correct = ("random from options") // picks a random button to be correct
+    c1 = "randomflag" // rand flag for option 1
+    c2 = "randomflag" // rand flag for option 2
+    c3 = "randomflag" // rand flag for option 3
+    c4 = "randomflag" // rand flag for option 4
+    flagname = correct // flag thats drawn is based off of what button was chosen to be correct
+  }
+}
+
