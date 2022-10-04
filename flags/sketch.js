@@ -10,7 +10,7 @@ let bgi;
 let logo;
 let fnames;
 
-let fname = "Canada";
+let fname = "";
 let textsize = 50;
 let total = 209;
 let gameon = false; // game state
@@ -32,12 +32,11 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
-  doflag();
+  // doflag();
 
   image(bgi, 0, 0, windowWidth, windowHeight); // background image
 
   image(flag, windowWidth/2 - flag.width/2, windowHeight/2 - flag.height/2); // main flag
-
 }
 
 function draw() {
@@ -123,11 +122,11 @@ function mousePressed(){
 function randflag(){
   if (gameon === true) {
     let options = [c1, c2, c3, c4];
-    correct = options[]; // picks a random button to be correct
-    c1 = fnames[]; // rand flag for option 1
-    c2 = "randomflag"; // rand flag for option 2
-    c3 = "randomflag"; // rand flag for option 3
-    c4 = "randomflag"; // rand flag for option 4
+    correct = options[1]; // picks a random button to be correct
+    c1 = fnames[1]; // rand flag for option 1
+    c2 = fnames[1]; // rand flag for option 2
+    c3 = fnames[1]; // rand flag for option 3
+    c4 = fnames[1]; // rand flag for option 4
     fname = correct; // flag thats drawn is based off of what button was chosen to be correct
   }
 }
@@ -136,3 +135,9 @@ function mouseIn(left, right, top, bottom){
   return mouseX >= left && mouseX <= right && 
   mouseY >= top && mouseY <= bottom;
 }
+
+// function randInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   console.log(Math.floor(Math.random() * (max - min) + min));
+// }
