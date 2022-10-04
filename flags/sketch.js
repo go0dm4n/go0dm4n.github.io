@@ -10,7 +10,7 @@ let bgi;
 let logo;
 let fnames;
 
-let fname = "";
+let fname = "Canada";
 let textsize = 50;
 let total = 209;
 let gameon = false; // game state
@@ -25,14 +25,14 @@ let c4;
 function preload() {
   bgi = loadImage("allflags.png");
   logo = loadImage("logo.png");
-  flag = loadImage("flag-icons-main/flags/4x3/" + fname + ".svg");
+  flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
   fnames = loadStrings("flagnames.txt");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
-  // doflag();
+  doflag();
 
   image(bgi, 0, 0, windowWidth, windowHeight); // background image
 
@@ -136,8 +136,8 @@ function mouseIn(left, right, top, bottom){
   mouseY >= top && mouseY <= bottom;
 }
 
-// function randInt(min, max) {
-//   min = Math.ceil(min);
-//   max = Math.floor(max);
-//   console.log(Math.floor(Math.random() * (max - min) + min));
-// }
+function randInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  Math.floor(Math.random() * (max - min) + min);
+}
