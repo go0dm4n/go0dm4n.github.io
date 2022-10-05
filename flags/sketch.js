@@ -25,7 +25,7 @@ let c4;
 function preload() {
   bgi = loadImage("allflags.png");
   logo = loadImage("logo.png");
-  flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
+  flag = loadImage("flag-icons-main/flags/4x3/" + fname + ".svg");
   fnames = loadStrings("flagnames.txt");
 }
 
