@@ -29,7 +29,6 @@ Burundi
 Cambodia
 Cameroon
 Canada
-Cape Verde
 Central African Republic
 Chad
 Chile
@@ -39,7 +38,6 @@ Comoros
 Congo
 DRC
 Costa Rica
-Cote d'Ivoire
 Croatia
 Cuba
 Cyprus
@@ -60,7 +58,7 @@ Fiji
 Finland
 France
 Gabon
-The Gambia
+Gambia
 Georgia
 Germany
 Ghana
@@ -87,8 +85,8 @@ Jordan
 Kazakhstan
 Kenya
 Kiribati
-Korea, North
-Korea, South
+South Korea
+North korea
 Kosovo
 Kuwait
 Kyrgyzstan
