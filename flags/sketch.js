@@ -8,12 +8,13 @@
 let flag;
 let bgi;
 let logo;
+let settings;
 let fnames;
 
 let fname = "Canada";
 let state = "main"; // game state
 let textsize = 50;
-let total = 209;
+let total = 195;
 let score = 0;
 let progress = 0;
 
@@ -22,39 +23,69 @@ let c1;
 let c2;
 let c3;
 let c4;
-let options = [c1,c2,c3,c4]; // picks a random button to be correct
-let buttons = [c1,c2,c3,c4];
+
+let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
 
 function preload() {
   bgi = loadImage("allflags.png");
   logo = loadImage("logo.png");
   fnames = loadStrings("flagnames.txt");
   flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
+  settings = loadImage("settings.png")
 }
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  image(bgi, 0, 0, windowWidth, windowHeight); // background image
-
 }
 
 function draw() {
   mainmenu();
+  settingsmenu();
   drawStuff();
   randflag();
 }
 
+function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
+  fill(rectcolor);
+  rect(x, y, width, height); //draws rect
+
+  fill(textcolor);
+  textSize(textsize);
+  text(textc, x, y + textsize - 5); //writes text
+}
+
 function mainmenu(){
   if (state === "main"){
+    image(bgi, 0, 0, windowWidth, windowHeight); // background image
+
     image(logo, windowWidth/2 - logo.width/2.6, windowHeight/2 - logo.height/3 - 150, logo.width/1.3, logo.height/1.3); // logo
 
-    fill(255);
-    rect(windowWidth/2 - logo.width/2, logo.height, logo.width, 50); // start button rectangle
+    image(settings, 10, 10, settings.width/6, settings.height/6); // settings symbol
+
+    makeButton(windowWidth/2 - logo.width/2, logo.height, logo.width, 50, 255, 0, textsize, "Start Game"); // start button
+
+  }
+}
+
+function settingsmenu(){
+  if (state === "settings") {
+    image(bgi, 0, 0, windowWidth, windowHeight); // background image
+
+    image(settings, 10, 10, settings.width/6, settings.height/6); // settings symbol
+
+    fill(128, 128, 128)
+    rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // background rectange
 
     fill(0);
-    textSize(textsize);
-    text("Start Game", windowWidth/2 - logo.width/2, logo.height + textsize); // start text
+    text("SETTINGS", windowWidth/2 - 120, 100); // title of settings menu
+    text("FLAGS", windowWidth/ 3 + 20, 200); // rounds text
+
+    makeButton(windowWidth/ 3 + 20, 250, logo.width /2, 50, 255, 0, textsize, "10");
+    makeButton(windowWidth/ 3 + 20, 300, logo.width /2, 50, 255, 0, textsize, "25");
+    makeButton(windowWidth/ 3 + 20, 350, logo.width /2, 50, 255, 0, textsize, "50");
+    makeButton(windowWidth/ 3 + 20, 400, logo.width /2, 50, 255, 0, textsize, "100");
+    makeButton(windowWidth/ 3 + 20, 450, logo.width /2, 50, 255, 0, textsize, "All");
   }
 }
 
@@ -62,46 +93,20 @@ function drawStuff() {
   if (state === "switch"){
 
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
-    fill(255);
-    rect(20, 10, textsize * 3, 50); // background rectangle for score
 
-    fill(0);
-    textSize(textsize); // score text
-    text(score, 20, 0 + textsize); 
-
-    textSize(textsize);
-    text("/" + total, 60 , 0 + textsize); // denominator
+    makeButton(20, 10, textsize * 3, 50, 255, 0, textsize, score + "/" + total) // scoreboard
     
     fill(128, 0, 0)
-    rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100);
+    rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // rectangle for options and flag
 
-    fill(255);
-    rect(windowWidth/2 - logo.width/4, logo.height + 70, logo.width /2, 50); // option 4 rectangle
-   
-    fill(0);
-    textSize(textsize);
-    text(c4, windowWidth/2 - logo.width/4, logo.height + 70 + textsize - 5); // option 4 text
-
-    fill(255);
-    rect(windowWidth/2 - logo.width/4, logo.height, logo.width /2, 50); // option 3 rectangle
+    makeButton(windowWidth/2 - logo.width/4, logo.height + 70, logo.width /2, 50, 255, 0, textsize, c4); // option 4 button
     
-    fill(0);
-    textSize(textsize);
-    text(c2, windowWidth/2 - logo.width/4, logo.height + textsize - 5); // option 3 text
- 
-    fill(255);
-    rect(windowWidth/2 - logo.width/4, logo.height - 70, logo.width /2, 50); // option 2 rectangle
-   
-    fill(0);
-    textSize(textsize);
-    text(c3, windowWidth/2 - logo.width/4, logo.height - 70 + textsize - 5); // option 2 text
-
-    fill(255);
-    rect(windowWidth/2 - logo.width/4, logo.height - 140, logo.width /2, 50); // option 1 rectangle
+    makeButton(windowWidth/2 - logo.width/4, logo.height, logo.width /2, 50, 255, 0, textsize, c3); // option 3 button
     
-    fill(0);
-    textSize(textsize);
-    text(c1, windowWidth/2 - logo.width/4, logo.height - 140 + textsize - 5); // option 1 text
+    makeButton(windowWidth/2 - logo.width/4, logo.height - 70, logo.width /2, 50, 255, 0, textsize, c2); // option 2 button
+
+    makeButton(windowWidth/2 - logo.width/4, logo.height - 140, logo.width /2, 50, 255, 0, textsize, c1); // option 1 button
+
   }  
 }
 
@@ -111,43 +116,84 @@ function mouseIn(left, right, top, bottom){
 }
 
 function mousePressed(){
-  if (state === "main" && mouseIn(windowWidth/2 - logo.width/2, windowWidth/2 - logo.width/2 + logo.width, logo.height, logo.width + 50)){ // start button
-    state = "switch";
+
+  if (state === "settings") {
+
+    if (mouseIn(10, windowWidth/6 + 10, 10, windowHeight/6 + 10)) { // exit settings mechanism
+      state = "main";
+    }
+    if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 250, 300)) { // set total flag rounds
+      total = 10;
+    }
+    if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 300, 350)) { 
+      total = 25;
+    }
+    if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 350, 400)) { 
+      total = 50;
+    }
+    if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 450, 500)) { 
+      total = 195;
+    }
+    console.log(total)
   }
 
-  if (state === "game" && mouseIn(windowWidth/2 - logo.width/2, windowWidth/2 - logo.width/2 + logo.width, logo.height, logo.width + 50)) { // option 1
-    fill(255);
-    state = "switch"
-    doflag()
-    if (correct === c1) {
-      score += 1;
-      progress += 1;
+  else if (state === "main") {
+    if (mouseIn(windowWidth/2 - logo.width/2, windowWidth/2 - logo.width/2 + logo.width, logo.height, logo.width + 50)){ // start mechanism
+      state = "switch";
     }
-    else if (correct !== c1){
-      progress += 1;
+    if (mouseIn(10, windowWidth/6 + 10, 10, windowHeight/6 + 10)) { // settings button mechanism
+      state = "settings";
     }
+
+  checkOpt(c1, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height - 140, logo.height - 90); // option 1 
+
+  checkOpt(c2, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height - 70, logo.height  - 20); // option 2
+
+  checkOpt(c3, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height, logo.height  + 50); // option 3
+
+  checkOpt(c4, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height + 70, logo.height  + 120); // option 4
+
   }
 }
 
 function doflag() {
   flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
-  console.log("ep")
   image(flag, windowWidth/2 - flag.width, windowHeight/2 - flag.height - 200, flag.width * 2, flag.height * 2); // main flag
 }
 
-function randflag(){
-  if (state === "switch") {
+function randflag(){ //should pick and draw random flags and options
+
+  if (state === "switch" && progress <= total) {
+
     buttons = [c1, c2, c3, c4]
     correct = buttons[Math.floor(random(0, 4))];
-    c1 = fnames[Math.floor(random(0, 194))]; // rand flag for option 1
-    c2 = fnames[Math.floor(random(0, 194))]; // rand flag for option 2
-    c3 = fnames[Math.floor(random(0, 194))]; // rand flag for option 3
-    c4 = fnames[Math.floor(random(0, 194))]; // rand flag for option 4
+
+    c1 = fnames[Math.floor(random(0, total))]; // rand flag for option 1
+    c2 = fnames[Math.floor(random(0, total))]; // rand flag for option 2
+    c3 = fnames[Math.floor(random(0, total))]; // rand flag for option 3
+    c4 = fnames[Math.floor(random(0, total))]; // rand flag for option 4
+
     fname = correct; // flag thats drawn is based off of what button was chosen to be correct
-    console.log(buttons);
-    console.log(fname);
     state = "game";
   }
 }
 
+function checkOpt(c, left, right, top, bottom){ 
 
+  if (state === "game") {
+
+    if (mouseIn(left, right, top, bottom)) { // button parameter check
+      state = "switch";
+      doflag(); 
+
+      if (correct === c) {
+        score += 1;
+        progress += 1;
+      }
+
+      else if (correct !== c){
+        progress += 1;
+      }
+    }
+}
+}
