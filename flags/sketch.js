@@ -47,7 +47,6 @@ function draw() {
   settingsmenu();
   drawStuff();
   randflag();
-  // console.log(state)
 }
 
 function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
@@ -122,7 +121,6 @@ function drawStuff() {
     fill(128, 0, 0)
     rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // rectangle for options and flag
 
-    console.log(c1, c2, c3, c4)
     makeButton(windowWidth/2 - logo.width/4, logo.height - 140, logo.width /2, 50, 255, 0, textsize, c1); // option 1 button
 
     makeButton(windowWidth/2 - logo.width/4, logo.height - 70, logo.width /2, 50, 255, 0, textsize, c2); // option 2 button
@@ -131,6 +129,7 @@ function drawStuff() {
 
     makeButton(windowWidth/2 - logo.width/4, logo.height + 70, logo.width /2, 50, 255, 0, textsize, c4); // option 4 button
 
+    flag = loadImage("flag-icons-main/flags/4x3/"+ fname + ".svg");
     image(flag, windowWidth/2 - flag.width, windowHeight/2 - flag.height - 200, flag.width * 2, flag.height * 2); // main flag
   }  
 }
@@ -192,7 +191,7 @@ function mousePressed(){
     if (mouseIn(10, windowWidth/6 + 10, 10, windowHeight/6 + 10)) { // settings button mechanism
       state = "settings";
     }
-
+  }
   else if (state === "game") { // game buttons
     checkOpt(c1, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height - 140, logo.height - 90); // option 1 
 
@@ -202,35 +201,46 @@ function mousePressed(){
 
     checkOpt(c4, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height + 70, logo.height  + 120); // option 4
     }
-  }
+  
 }
 
 function doflag() {
-  flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
+  console.log(fname)
 }
 
 function randflag(){ //should pick and draw random flags and options
   if (state === "switch" && progress <= total) {
 
     buttons = [c1, c2, c3, c4]
-    correct = buttons[Math.floor(random(0, 4))];
 
     c1 = fnames[Math.floor(random(0, 195))]; // rand flag for option 1
     c2 = fnames[Math.floor(random(0, 195))]; // rand flag for option 2
     c3 = fnames[Math.floor(random(0, 195))]; // rand flag for option 3
     c4 = fnames[Math.floor(random(0, 195))]; // rand flag for option 4
 
-    // fname = correct; // flag thats drawn is based off of what button was chosen to be correct
+    fname = buttons[Math.floor(random(0, 4))]; // flag thats drawn is based off of what button was chosen to be correct
+
+    if (fname === c1){
+      correct = "c1"
+    }
+    if (fname === c2){
+      correct = "c2"
+    }
+    if (fname === c3){
+      correct = "c3"
+    }
+    if (fname === c4){
+      correct = "c4"
+    }
+    console.log(correct)
     state = "game";
   }
 }
 
 function checkOpt(c, left, right, top, bottom){ 
-  console.log("c1")
   if (state === "game") {
     if (mouseIn(left, right, top, bottom)) { // button parameter check
       state = "switch";
-      console.log("nice")
       if (correct === c) {
         score += 1;
         progress += 1;
