@@ -45,8 +45,8 @@ function setup() {
 function draw() {
   mainmenu();
   settingsmenu();
-  randflag();
   drawStuff();
+  randflag();
   // console.log(state)
 }
 
