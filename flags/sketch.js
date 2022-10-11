@@ -17,7 +17,7 @@ let state = "main"; // game state
 let textsize = 50;
 
 let total = 195;
-let continent = "world";
+let continent = "All";
 let score = 0;
 let progress = 0;
 
@@ -28,13 +28,14 @@ let c3;
 let c4;
 
 let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
+let options = ["c1", "c2", "c3", "c4"];
 
 function preload() {
   bgi = loadImage("allflags.png");
   logo = loadImage("logo.png");
-  fnames = loadStrings("flagnames.txt");
+  fnames = loadStrings(continent + ".txt");
   flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
-  settings = loadImage("settings.png")
+  settings = loadImage("settings.png");
 }
 
 
@@ -47,7 +48,6 @@ function draw() {
   settingsmenu();
   drawStuff();
   randflag();
-  // console.log(state)
 }
 
 function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
@@ -78,7 +78,7 @@ function settingsmenu(){
 
     image(settings, 10, 10, settings.width/6, settings.height/6); // settings symbol
 
-    fill(128, 128, 128)
+    fill(128, 128, 128);
     rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 50); // background rectangle
 
     fill(0);
@@ -117,12 +117,11 @@ function drawStuff() {
 
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
 
-    makeButton(20, 10, textsize * 3, 50, 255, 0, textsize, score + "/" + total) // scoreboard
+    makeButton(20, 10, textsize * 3, 50, 255, 0, textsize, score + "/" + total); // scoreboard
     
-    fill(128, 0, 0)
+    fill(173,216,230);
     rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // rectangle for options and flag
 
-    console.log(c1, c2, c3, c4)
     makeButton(windowWidth/2 - logo.width/4, logo.height - 140, logo.width /2, 50, 255, 0, textsize, c1); // option 1 button
 
     makeButton(windowWidth/2 - logo.width/4, logo.height - 70, logo.width /2, 50, 255, 0, textsize, c2); // option 2 button
@@ -132,7 +131,10 @@ function drawStuff() {
     makeButton(windowWidth/2 - logo.width/4, logo.height + 70, logo.width /2, 50, 255, 0, textsize, c4); // option 4 button
 
     image(flag, windowWidth/2 - flag.width, windowHeight/2 - flag.height - 200, flag.width * 2, flag.height * 2); // main flag
-  }  
+  }
+  // if (state === "wait"){
+  //   makeButton(0, logo.height + 70, logo.width /2, 50, 255, 0, textsize, "NEXT");
+  // }  
 }
 
 function mouseIn(left, right, top, bottom){
@@ -181,7 +183,7 @@ function mousePressed(){
       continent = "Oceania";
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 900, 950)) { 
-      continent = "Earth";
+      continent = "All";
     }
   }
 
@@ -192,7 +194,7 @@ function mousePressed(){
     if (mouseIn(10, windowWidth/6 + 10, 10, windowHeight/6 + 10)) { // settings button mechanism
       state = "settings";
     }
-
+  }
   else if (state === "game") { // game buttons
     checkOpt(c1, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height - 140, logo.height - 90); // option 1 
 
@@ -201,44 +203,40 @@ function mousePressed(){
     checkOpt(c3, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height, logo.height + 50); // option 3
 
     checkOpt(c4, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height + 70, logo.height  + 120); // option 4
-    }
   }
-}
 
-function doflag() {
-  flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
 }
 
 function randflag(){ //should pick and draw random flags and options
   if (state === "switch" && progress <= total) {
 
-    buttons = [c1, c2, c3, c4]
-    correct = buttons[Math.floor(random(0, 4))];
+    correct = options[Math.floor(random(0, 4))];
+    buttons = [c1, c2, c3, c4];
 
     c1 = fnames[Math.floor(random(0, 195))]; // rand flag for option 1
     c2 = fnames[Math.floor(random(0, 195))]; // rand flag for option 2
     c3 = fnames[Math.floor(random(0, 195))]; // rand flag for option 3
     c4 = fnames[Math.floor(random(0, 195))]; // rand flag for option 4
 
-    // fname = correct; // flag thats drawn is based off of what button was chosen to be correct
+    fname = buttons[Math.floor(random(0, 3))]; // flag thats drawn is based off of what button was chosen to be correct
     state = "game";
+    // flag = loadImage("flag-icons-main/flags/4x3/" + fname + ".svg");
+    flag = loadImage(`/flags/flag-icons-main/flags/4x3/${fname}.svg`);
   }
 }
 
 function checkOpt(c, left, right, top, bottom){ 
-  console.log("c1")
   if (state === "game") {
     if (mouseIn(left, right, top, bottom)) { // button parameter check
-      state = "switch";
-      console.log("nice")
-      if (correct === c) {
+      if (correct === JSON.stringify(c)) { // checks if correct is equal to button being pressed
         score += 1;
         progress += 1;
       }
 
-      else if (correct !== c){
+      else if (correct !== JSON.stringify(c)){
         progress += 1;
       }
+      state = "switch";
     }
-}
+  }
 }
