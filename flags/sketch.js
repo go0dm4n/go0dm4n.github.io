@@ -16,26 +16,28 @@ let state = "main"; // game state
 
 let textsize = 50;
 
-let total = 195;
+let total = 193; // total rounds default
 let continent = "All";
-let score = 0;
+let score = 0; // score
 let progress = 0;
 
 let correct;
-let c1;
-let c2;
-let c3;
-let c4;
+let c1 = "";
+let c2 = "";
+let c3 = "";
+let c4 = "";
 
 let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
 let options = ["c1", "c2", "c3", "c4"];
 
 function preload() {
-  bgi = loadImage("allflags.png");
-  logo = loadImage("logo.png");
-  fnames = loadStrings(continent + ".txt");
+  bgi = loadImage("imgs/allflags.png");
+  logo = loadImage("imgs/logo.png");
+  fnames = loadStrings("contnames/" + continent + ".txt");
   flag = loadImage("flag-icons-main/flags/4x3/Canada.svg");
-  settings = loadImage("settings.png");
+  settings = loadImage("imgs/settings.png");
+  nkey = loadImage("imgs/nkey.png");
+  rkey = loadImage("imgs/rkey.png");
 }
 
 
@@ -46,8 +48,9 @@ function setup() {
 function draw() {
   mainmenu();
   settingsmenu();
-  drawStuff();
+  endsc();
   randflag();
+  drawGame();
 }
 
 function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
@@ -112,7 +115,51 @@ function settingsmenu(){
   }
 }
 
-function drawStuff() {
+function endsc() {
+  if (state === "end") {
+    image(bgi, 0, 0, windowWidth, windowHeight); // background image
+    fill(173,216,230)
+    rect(windowWidth/1.7 - windowWidth/3.4, 150, windowWidth/1.7, windowHeight - 300);
+    if (score === total) {
+      endt = "cool"
+    }
+    if (score >= total * .9) {
+      endt = "almost there!"
+    }
+    else if (score >= total / 2) {
+      endt = "you did okay.."
+    }
+    else if (score <= total / 2 && score > 0) {
+      endt = "you're kinda bad"
+    }
+    else if (score === total * 0) {
+      endt = "how"
+    }
+
+    fill(0)
+    textSize(100);
+    text(endt, windowWidth/1.7 - windowWidth/3.4, 400); //writes text
+    text("score:" + score, windowWidth/1.7 - windowWidth/3.4, 500);
+
+  }
+}
+
+function randflag(){ //should pick and draw random flags and options
+  if (state === "switch" && progress <= total) {
+    correct = options[Math.floor(random(0, 4))];
+    buttons = [c1, c2, c3, c4];
+
+    c1 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 1
+    c2 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 2
+    c3 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 3
+    c4 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 4
+
+    fname = buttons[Math.floor(random(0, 3))]; // flag thats drawn is based off of what button was chosen to be correct
+    flag = loadImage("/flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
+  }
+}
+
+function drawGame() {
   if (state === "switch"){
 
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
@@ -129,12 +176,18 @@ function drawStuff() {
     makeButton(windowWidth/2 - logo.width/4, logo.height, logo.width /2, 50, 255, 0, textsize, c3); // option 3 button
 
     makeButton(windowWidth/2 - logo.width/4, logo.height + 70, logo.width /2, 50, 255, 0, textsize, c4); // option 4 button
-
+    
     image(flag, windowWidth/2 - flag.width, windowHeight/2 - flag.height - 200, flag.width * 2, flag.height * 2); // main flag
+
+    state = "game";
   }
-  // if (state === "wait"){
-  //   makeButton(0, logo.height + 70, logo.width /2, 50, 255, 0, textsize, "NEXT");
-  // }  
+  if (state === "wait"){
+    makeButton(windowWidth/ 3 + 20, logo.height + 200, 100, 50, 255, 0, textsize, "    ->"); //next button box
+    image(nkey, windowWidth/ 3 + 20, logo.height + 200, 50, 50); // N key image
+  }  
+  if (state === "game" && progress === total) { // ends the game if round limit is reached
+    state = "end"
+  }
 }
 
 function mouseIn(left, right, top, bottom){
@@ -149,15 +202,22 @@ function mousePressed(){
       state = "main";
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 250, 300)) { // set total flag rounds mechanism
-      total = 10;
+      if (continent !== "North America" && continent !== "South America" && continent !== "Oceania") {
+        total = 10;
+        }
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 300, 350)) { 
-      total = 25;
+      if (continent !== "North America" && continent !== "South America" && continent !== "Oceania") {
+        total = 25;
+      }
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 350, 400)) { 
-      total = 50;
+      if (continent === "All" | continent === "Asia" | continent === "Africa") {
+        total = 50;
+      }
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 400, 450)) { 
+      continent = "All";
       total = 100;
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 450, 500)) { 
@@ -166,25 +226,33 @@ function mousePressed(){
 
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 600, 650)) { // set region mechanism
       continent = "Africa";
+      total = 55;
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 650, 700)) { 
       continent = "Asia";
+      total = 51;
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 700, 750)) { 
       continent = "Europe";
+      total = 43;
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 750, 800)) { 
       continent = "North America";
+      total = 23;
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 800, 850)) { 
       continent = "South America";
+      total = 13;
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 850, 900)) { 
       continent = "Oceania";
+      total = 17;
     }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 900, 950)) { 
       continent = "All";
+      total = 193;
     }
+    fnames = loadStrings("contnames/" + continent + ".txt");
   }
 
   else if (state === "main") { //main menu buttons
@@ -195,6 +263,7 @@ function mousePressed(){
       state = "settings";
     }
   }
+
   else if (state === "game") { // game buttons
     checkOpt(c1, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height - 140, logo.height - 90); // option 1 
 
@@ -207,21 +276,26 @@ function mousePressed(){
 
 }
 
-function randflag(){ //should pick and draw random flags and options
-  if (state === "switch" && progress <= total) {
+function keyPressed() {
+  if (keyCode === 82) { // resets game when R is pressed
+    preload()
+    state = "main";
+    progress = 0;
+    score = 0;
+    continent = "All";
+    total = 193
+    c1 = "";
+    c2 = "";
+    c3 = "";
+    c4 = "";
+    buttons = [c1,c2,c3,c4];  
+    options = ["c1", "c2", "c3", "c4"];
+  }
 
-    correct = options[Math.floor(random(0, 4))];
-    buttons = [c1, c2, c3, c4];
-
-    c1 = fnames[Math.floor(random(0, 195))]; // rand flag for option 1
-    c2 = fnames[Math.floor(random(0, 195))]; // rand flag for option 2
-    c3 = fnames[Math.floor(random(0, 195))]; // rand flag for option 3
-    c4 = fnames[Math.floor(random(0, 195))]; // rand flag for option 4
-
-    fname = buttons[Math.floor(random(0, 3))]; // flag thats drawn is based off of what button was chosen to be correct
-    state = "game";
-    // flag = loadImage("flag-icons-main/flags/4x3/" + fname + ".svg");
-    flag = loadImage(`/flags/flag-icons-main/flags/4x3/${fname}.svg`);
+  if (state === "wait") { // moves to next flag when N ispressed
+    if (keyCode === 78) {
+      state = "switch";
+    }
   }
 }
 
@@ -236,7 +310,7 @@ function checkOpt(c, left, right, top, bottom){
       else if (correct !== JSON.stringify(c)){
         progress += 1;
       }
-      state = "switch";
+      state = "wait";
     }
   }
 }

@@ -35,7 +35,7 @@ Chile
 China
 Colombia
 Comoros
-Congo
+Republic of the Congo
 DRC
 Costa Rica
 Croatia
@@ -46,7 +46,7 @@ Denmark
 Djibouti
 Dominica
 Dominican Republic
-East Timor 
+East Timor
 Ecuador
 Egypt
 El Salvador
@@ -98,7 +98,7 @@ Libya
 Liechtenstein
 Lithuania
 Luxembourg
-Macedonia
+North Macedonia
 Madagascar
 Malawi
 Malaysia
@@ -145,7 +145,7 @@ Saint Lucia
 Saint Vincent and the Grenadines
 Samoa
 San Marino
-Sao Tome and Principe
+São Tomé and Príncipe
 Saudi Arabia
 Senegal
 Serbia
@@ -162,7 +162,7 @@ Spain
 Sri Lanka
 Sudan
 Suriname
-Swaziland
+Eswatini
 Sweden
 Switzerland
 Syria
@@ -179,7 +179,7 @@ Turkmenistan
 Tuvalu
 Uganda
 Ukraine
-United Arab Emirates
+UAE
 United Kingdom
 United States of America
 Uruguay
@@ -191,4 +191,3 @@ Vietnam
 Yemen
 Zambia
 Zimbabwe
-
