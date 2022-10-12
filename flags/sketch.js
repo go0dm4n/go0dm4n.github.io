@@ -11,6 +11,8 @@ let logo;
 let settings;
 let fnames;
 
+let fr = 15; // frame rate
+
 let fname = "Canada";
 let state = "main"; // game state
 
@@ -26,6 +28,7 @@ let c1 = "";
 let c2 = "";
 let c3 = "";
 let c4 = "";
+
 
 let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
 let options = ["c1", "c2", "c3", "c4"];
@@ -43,6 +46,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  frameRate(fr)
 }
 
 function draw() {
@@ -51,6 +55,7 @@ function draw() {
   endsc();
   randflag();
   drawGame();
+  console.log(fname)
 }
 
 function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
@@ -156,30 +161,31 @@ function randflag(){ //should pick and draw random flags and options
 
     fname = buttons[Math.floor(random(0, 3))]; // flag thats drawn is based off of what button was chosen to be correct
     flag = loadImage("/flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
+    state = "game"; 
   }
 }
 
 function drawGame() {
-  if (state === "switch"){
-
+  if (state === "game"){
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
 
     makeButton(20, 10, textsize * 3, 50, 255, 0, textsize, score + "/" + total); // scoreboard
+    makeButton(20, 60, textsize * continent.length / 2, 50, 255, 0, textsize, continent); // tells you which region youre playing
+    makeButton(20, window.Height /2, textsize * 4, 50, 255, 0, textsize, "      to restart"); // tells you which region youre playing
     
     fill(173,216,230);
     rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // rectangle for options and flag
 
-    makeButton(windowWidth/2 - logo.width/4, logo.height - 140, logo.width /2, 50, 255, 0, textsize, c1); // option 1 button
+    makeButton(windowWidth/2 - textsize * c1.length / 4, logo.height - 140, textsize * c1.length / 2 + 30, 50, 255, 0, textsize, c1); // option 1 button
 
-    makeButton(windowWidth/2 - logo.width/4, logo.height - 70, logo.width /2, 50, 255, 0, textsize, c2); // option 2 button
+    makeButton(windowWidth/2 - textsize * c2.length / 4, logo.height - 70, textsize * c2.length / 2 + 30, 50, 255, 0, textsize, c2); // option 2 button
 
-    makeButton(windowWidth/2 - logo.width/4, logo.height, logo.width /2, 50, 255, 0, textsize, c3); // option 3 button
+    makeButton(windowWidth/2 - textsize * c3.length / 4, logo.height, textsize * c3.length / 2 + 30, 50, 255, 0, textsize, c3); // option 3 button
 
-    makeButton(windowWidth/2 - logo.width/4, logo.height + 70, logo.width /2, 50, 255, 0, textsize, c4); // option 4 button
+    makeButton(windowWidth/2 - textsize * c4.length / 4, logo.height + 70, textsize * c4.length / 2 + 30, 50, 255, 0, textsize, c4); // option 4 button
     
     image(flag, windowWidth/2 - flag.width, windowHeight/2 - flag.height - 200, flag.width * 2, flag.height * 2); // main flag
 
-    state = "game";
   }
   if (state === "wait"){
     makeButton(windowWidth/ 3 + 20, logo.height + 200, 100, 50, 255, 0, textsize, "    ->"); //next button box
@@ -190,7 +196,7 @@ function drawGame() {
   }
 }
 
-function mouseIn(left, right, top, bottom){
+function mouseIn(left, right, top, bottom){ //button parameter function
   return mouseX >= left && mouseX <= right && 
   mouseY >= top && mouseY <= bottom;
 }
@@ -201,13 +207,11 @@ function mousePressed(){
     if (mouseIn(10, windowWidth/6 + 10, 10, windowHeight/6 + 10)) { // exit settings mechanism
       state = "main";
     }
-    if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 250, 300)) { // set total flag rounds mechanism
-      if (continent !== "North America" && continent !== "South America" && continent !== "Oceania") {
+    if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 250, 300)) { // set total flag rounds mechanism 
         total = 10;
         }
-    }
     if (mouseIn(windowWidth/ 3 + 20, windowWidth/ 3 + 20 + logo.width /2, 300, 350)) { 
-      if (continent !== "North America" && continent !== "South America" && continent !== "Oceania") {
+      if (continent !== "North America" && continent !== "South America" && continent !== "Oceania") { // these regions dont have enough countries
         total = 25;
       }
     }
@@ -252,7 +256,17 @@ function mousePressed(){
       continent = "All";
       total = 193;
     }
-    fnames = loadStrings("contnames/" + continent + ".txt");
+    fnames = loadStrings("contnames/" + continent + ".txt"); // changes which text file it grabs names from 
+  }
+
+  else if (state === "game") { // game buttons
+    checkOpt(c1, windowWidth/2 - textsize * c1.length / 4, (windowWidth/2 - textsize * c1.length / 4) + (textsize * c1.length / 2 + 30), logo.height - 140, logo.height - 90); // option 1 
+
+    checkOpt(c2, windowWidth/2 - textsize * c2.length / 4, (windowWidth/2 - textsize * c2.length / 4) + (textsize * c2.length / 2 + 30), logo.height - 70, logo.height  - 20); // option 2
+
+    checkOpt(c3, windowWidth/2 - textsize * c3.length / 4, (windowWidth/2 - textsize * c3.length / 4) + (textsize * c3.length / 2 + 30), logo.height, logo.height + 50); // option 3
+
+    checkOpt(c4, windowWidth/2 - textsize * c4.length / 4, (windowWidth/2 - textsize * c4.length / 4) + (textsize * c4.length / 2 + 30), logo.height + 70, logo.height  + 120); // option 4
   }
 
   else if (state === "main") { //main menu buttons
@@ -262,16 +276,6 @@ function mousePressed(){
     if (mouseIn(10, windowWidth/6 + 10, 10, windowHeight/6 + 10)) { // settings button mechanism
       state = "settings";
     }
-  }
-
-  else if (state === "game") { // game buttons
-    checkOpt(c1, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height - 140, logo.height - 90); // option 1 
-
-    checkOpt(c2, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height - 70, logo.height  - 20); // option 2
-
-    checkOpt(c3, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height, logo.height + 50); // option 3
-
-    checkOpt(c4, windowWidth/2 - logo.width/4, (windowWidth/2 - logo.width/4) + (logo.width /2), logo.height + 70, logo.height  + 120); // option 4
   }
 
 }
@@ -292,7 +296,7 @@ function keyPressed() {
     options = ["c1", "c2", "c3", "c4"];
   }
 
-  if (state === "wait") { // moves to next flag when N ispressed
+  if (state === "wait") { // moves to next flag when N is pressed
     if (keyCode === 78) {
       state = "switch";
     }
@@ -307,10 +311,10 @@ function checkOpt(c, left, right, top, bottom){
         progress += 1;
       }
 
-      else if (correct !== JSON.stringify(c)){
+      else if (correct !== JSON.stringify(c)){ // just moves along if incorrect
         progress += 1;
       }
-      state = "wait";
+      state = "wait"; 
     }
   }
 }
