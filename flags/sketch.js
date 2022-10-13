@@ -33,11 +33,11 @@ let c1 = "";
 let c2 = "";
 let c3 = "";
 let c4 = "";
-let colorcst;
 
 let endt = "";
 
 let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
+let cdone = []; // list of written options to prevent repetition
 
 fname = buttons[Math.floor(random(0, 3))]; // first line of options
 
@@ -160,16 +160,36 @@ function randflag(){ //should pick and draw random flags and options
   if (state === "switch" && progress <= total) {
 
     c1 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 1
+    cdone.push(c1);
+
     c2 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 2
+
+    while (cdone.includes(c2)) { // if option is in list
+      c2 = fnames[Math.floor(random(0, fnames.length))]; // reroll
+    }
+    cdone.push(c2); //adds to list
+
     c3 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 3
+
+    while (cdone.includes(c3)) {
+      c3 = fnames[Math.floor(random(0, fnames.length))]; // reroll
+    }
+    cdone.push(c3);
+
     c4 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 4
+
+    while (cdone.includes(c4)) {
+      c4 = fnames[Math.floor(random(0, fnames.length))]; // reroll
+    }
+    
+    cdone.push(c4);
     buttons = [c1, c2, c3, c4]; // picks random option
 
     fname = buttons[Math.floor(random(0, 3))]; // flag thats drawn is based off of what button was chosen to be correct
-
     flag = loadImage("/flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
+
+    cdone  =[]
     state = "game"; 
-    console.log(fname);
   }
 }
 
@@ -202,6 +222,18 @@ function drawGame() {
     makeButton(windowWidth/ 3 + 10, logo.height + 50, 100, 50, 255, 0, textsize, "    ->"); // next button box
     image(nkey, windowWidth/ 3 + 10, logo.height + 50, 50, 50); // N key image
 
+    if (fname === c1) {
+      makeButton(windowWidth/2 - textsize * c1.length / 4, logo.height - 210, textsize * c1.length / 2 + 30, 50, "green", 0, textsize, c1); // option 1 button
+    }
+    if (fname === c2) {
+      makeButton(windowWidth/2 - textsize * c2.length / 4, logo.height - 140, textsize * c2.length / 2 + 30, 50, "green", 0, textsize, c2); // option 2 button
+    }
+    if (fname === c3) {
+      makeButton(windowWidth/2 - textsize * c3.length / 4, logo.height - 70, textsize * c3.length / 2 + 30, 50, "green", 0, textsize, c3); // option 3 button
+    }
+    if (fname === c4) {
+      makeButton(windowWidth/2 - textsize * c4.length / 4, logo.height, textsize * c4.length / 2 + 30, 50, "green", 0, textsize, c4); // option 4 button
+    }
   }  
   if (state === "game" && progress === total) { // ends the game if round limit is reached
     state = "end";
@@ -325,7 +357,7 @@ function checkOpt(c, left, right, top, bottom){
       else if (c !== fname){ // just moves along if incorrect
         progress += 1;
       }
+      state = "wait"; 
     }
-    state = "wait"; 
   }
 }
