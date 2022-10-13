@@ -33,10 +33,7 @@ let c1 = "";
 let c2 = "";
 let c3 = "";
 let c4 = "";
-let colorc1;
-let colorc2;
-let colorc3;
-let colorc4;
+let colorcst;
 
 let endt = "";
 
@@ -126,7 +123,7 @@ function settingsmenu(){
 
     makeButton(windowWidth/ 3 + 20, 850, logo.width /2, 50, 255, 0, textsize, "Oceania");
 
-    makeButton(windowWidth/ 3 + 20, 900, logo.width /2, 50, 255, 0, textsize, "Earth");
+    makeButton(windowWidth/ 3 + 20, 900, logo.width /2, 50, 255, 0, textsize, "Earf");
   }
 }
 
@@ -135,7 +132,7 @@ function endsc() {
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
     fill(173,216,230);
     rect(windowWidth/1.7 - windowWidth/3.4, 150, windowWidth/1.7, windowHeight - 300);
-    if (score === total) {
+    if (score == total) {
       endt = "cool";
     }
     if (score >= total * 0.9) {
@@ -182,26 +179,29 @@ function drawGame() {
 
     makeButton(20, 10, textsize * 3, 50, 255, 0, textsize, score + "/" + total); // scoreboard
     makeButton(20, 60, textsize * continent.length / 2, 50, 255, 0, textsize, continent); // tells you which region youre playing
-    makeButton(20, window.Height /2, textsize * 4, 50, 255, 0, textsize, "      to restart"); // tells you which region youre playing
+    makeButton(20, 110, textsize * 6, 50, 255, 0, textsize, "     to restart"); // tells you which region youre playing
+
+    image(rkey, 20, 110, 50, 50); // 
     
     fill(173,216,230);
     rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // rectangle for options and flag
 
 
-    makeButton(windowWidth/2 - textsize * c1.length / 4, logo.height - 210, textsize * c1.length / 2 + 30, 50, colorc1, 0, textsize, c1); // option 1 button
+    makeButton(windowWidth/2 - textsize * c1.length / 4, logo.height - 210, textsize * c1.length / 2 + 30, 50, 255, 0, textsize, c1); // option 1 button
 
-    makeButton(windowWidth/2 - textsize * c2.length / 4, logo.height - 140, textsize * c2.length / 2 + 30, 50, colorc2, 0, textsize, c2); // option 2 button
+    makeButton(windowWidth/2 - textsize * c2.length / 4, logo.height - 140, textsize * c2.length / 2 + 30, 50, 255, 0, textsize, c2); // option 2 button
 
-    makeButton(windowWidth/2 - textsize * c3.length / 4, logo.height - 70, textsize * c3.length / 2 + 30, 50, colorc3, 0, textsize, c3); // option 3 button
+    makeButton(windowWidth/2 - textsize * c3.length / 4, logo.height - 70, textsize * c3.length / 2 + 30, 50, 255, 0, textsize, c3); // option 3 button
 
-    makeButton(windowWidth/2 - textsize * c4.length / 4, logo.height, textsize * c4.length / 2 + 30, 50, colorc4, 0, textsize, c4); // option 4 button
+    makeButton(windowWidth/2 - textsize * c4.length / 4, logo.height, textsize * c4.length / 2 + 30, 50, 255, 0, textsize, c4); // option 4 button
     
     image(flag, windowWidth/2 - flag.width, windowHeight/2 - flag.height - 200, flag.width * 2, flag.height * 2); // main flag
 
   }
   if (state === "wait"){
-    makeButton(windowWidth/ 3 + 10, logo.height + 50, 100, 50, 255, 0, textsize, "    ->"); //next button box
+    makeButton(windowWidth/ 3 + 10, logo.height + 50, 100, 50, 255, 0, textsize, "    ->"); // next button box
     image(nkey, windowWidth/ 3 + 10, logo.height + 50, 50, 50); // N key image
+
   }  
   if (state === "game" && progress === total) { // ends the game if round limit is reached
     state = "end";
@@ -320,14 +320,12 @@ function checkOpt(c, left, right, top, bottom){
       if (c === fname) { // checks if correct is equal to button being pressed
         score += 1;
         progress += 1;
-        color + c = c;
       }
 
       else if (c !== fname){ // just moves along if incorrect
         progress += 1;
-        color + c = c;
       }
-      state = "wait"; 
     }
+    state = "wait"; 
   }
 }
