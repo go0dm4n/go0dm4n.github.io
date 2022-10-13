@@ -82,7 +82,7 @@ function mainmenu(){
 
     image(settings, 10, 10, settings.width/6, settings.height/6); // settings symbol
 
-    makeButton(windowWidth/2 - logo.width/2, logo.height, logo.width, 50, 255, 0, textsize, "Start Game"); // start button
+    makeButton(windowWidth/2 - logo.width/4, logo.height, logo.width/2, 50, (27,27,28), 250, textsize, "Start Game"); // start button
 
   }
 }
@@ -130,9 +130,9 @@ function settingsmenu(){
 function endsc() {
   if (state === "end") {
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
-    fill(173,216,230);
-    rect(windowWidth/1.7 - windowWidth/3.4, 150, windowWidth/1.7, windowHeight - 300);
-    if (score == total) {
+    fill(27,27,28);
+    rect(windowWidth/2 - windowWidth/4, flag.height/2, windowWidth/2, windowHeight - 300); //end rectangle
+    if (score === total) {
       endt = "cool";
     }
     if (score >= total * 0.9) {
@@ -147,8 +147,8 @@ function endsc() {
     else if (score === total * 0) {
       endt = "how";
     }
-
-    fill(0);
+    console.log(total)
+    fill(250);
     textSize(100);
     text(endt, windowWidth/1.7 - windowWidth/3.4, 400); //writes text
     text("score:" + score, windowWidth/1.7 - windowWidth/3.4, 500);
@@ -201,7 +201,7 @@ function drawGame() {
     makeButton(20, 60, textsize * continent.length / 2, 50, 255, 0, textsize, continent); // tells you which region youre playing
     makeButton(20, 110, textsize * 6, 50, 255, 0, textsize, "     to restart"); // tells you which region youre playing
 
-    image(rkey, 20, 110, 50, 50); // 
+    image(rkey, 20, 110, 50, 50); // R key image
     
     fill(173,216,230);
     rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // rectangle for options and flag
@@ -218,11 +218,12 @@ function drawGame() {
     image(flag, windowWidth/2 - flag.width, windowHeight/2 - flag.height - 200, flag.width * 2, flag.height * 2); // main flag
 
   }
-  if (state === "wait"){
+
+  if (state === "wait"){ // after option is clicked
     makeButton(windowWidth/ 3 + 10, logo.height + 50, 100, 50, 255, 0, textsize, "    ->"); // next button box
     image(nkey, windowWidth/ 3 + 10, logo.height + 50, 50, 50); // N key image
 
-    if (fname === c1) {
+    if (fname === c1) { // if this option is correct it will color it green
       makeButton(windowWidth/2 - textsize * c1.length / 4, logo.height - 210, textsize * c1.length / 2 + 30, 50, "green", 0, textsize, c1); // option 1 button
     }
     if (fname === c2) {
@@ -234,6 +235,7 @@ function drawGame() {
     if (fname === c4) {
       makeButton(windowWidth/2 - textsize * c4.length / 4, logo.height, textsize * c4.length / 2 + 30, 50, "green", 0, textsize, c4); // option 4 button
     }
+
   }  
   if (state === "game" && progress === total) { // ends the game if round limit is reached
     state = "end";
