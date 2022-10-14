@@ -13,6 +13,7 @@ let settings;
 let fnames;
 let nkey;
 let rkey;
+let startb;
 
 let num = 0;
 
@@ -22,6 +23,8 @@ let fname;
 let state = "main"; // game state
 
 let textsize = 50;
+
+let index; // place in array
 
 let total = 193; // total rounds default
 let continent = "All";
@@ -50,7 +53,7 @@ function preload() {
   settings = loadImage("imgs/settings.png");
   nkey = loadImage("imgs/nkey.png");
   rkey = loadImage("imgs/rkey.png");
-  startb = loadImage("imgs/startb.png")
+  startb = loadImage("imgs/startb.png");
 }
 
 
@@ -65,20 +68,20 @@ function draw() {
   endsc();
   randflag();
   drawGame();
-  if (windowWidth < 1000 | windowHeight < 800) {
-    brostop()
+  if (windowWidth < 800 | windowHeight < 600) {
+    brostop();
   }
 }
 
 function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){ //draws rectangle with text
 
-  if (state != "wait") {
+  if (state !== "wait") {
     if (mouseIn(x, x + width, y, y + height)){ //darkens rectangle if mouse is in
-      rectcolor -= 50
+      rectcolor -= 50;
     }
 
     if (!mouseIn(x, x + width, y, y + height)){ //lightens rectangle if mouse is out
-      rectcolor += 50
+      rectcolor += 50;
     }
   }
 
@@ -97,12 +100,12 @@ function mouseIn(left, right, top, bottom){ //button parameter function
 }
 
 function brostop(){ //if screen is too small it displays message
-  fill("red")
-  rect(0,0, windowWidth,windowHeight)
+  fill("red");
+  rect(0,0, windowWidth,windowHeight);
 
-  fill("white")
-  textSize(100)
-  text("screen too small :(", 0, windowHeight/2)
+  fill("white");
+  textSize(100);
+  text("screen too small :(", 0, windowHeight/2);
 }
 
 function mainmenu(){ //draws main menu
@@ -281,15 +284,15 @@ function drawGame() {
       makeButton(windowWidth/2 - textsize * c1.length / 4, flag.height * 3, textsize * c1.length / 2 + 30, 50, "red", 0, textsize, c1); // option 1 button
     }
 
-    if (incorrect === c2) { // if this option was picked incorrectly it will color it red
+    if (incorrect === c2) { 
       makeButton(windowWidth/2 - textsize * c2.length / 4, flag.height * 3 + 70, textsize * c2.length / 2 + 30, 50, "red", 0, textsize, c2); // option 1 button
     }
 
-    if (incorrect === c3) { // if this option was picked incorrectly it will color it red
+    if (incorrect === c3) { 
       makeButton(windowWidth/2 - textsize * c3.length / 4, flag.height * 3 + 140, textsize * c3.length / 2 + 30, 50, "red", 0, textsize, c3); // option 1 button
     }
 
-    if (incorrect === c4) { // if this option was picked incorrectly it will color it red
+    if (incorrect === c4) { 
       makeButton(windowWidth/2 - textsize * c4.length / 4, flag.height * 3 + 210, textsize * c4.length / 2 + 30, 50, "red", 0, textsize, c4); // option 1 button
     }
 
