@@ -28,8 +28,6 @@ let score = 0; // score
 let progress = 0; // round number
 
 let correct;
-<<<<<<< HEAD:flaggame/sketch.js
-<<<<<<< HEAD:flaggame/sketch.js
 let incorrect;
 let c1 = ""; // option 1
 let c2 = ""; // option 2
@@ -38,24 +36,8 @@ let c4 = ""; // option 4
 
 let endt = "";
 
-let buttons = [c1,c2,c3,c4];  // lets us pick a random button to be correct
-let cdone = []; // list of written options to avoid multiple of same option in a round
-=======
-=======
->>>>>>> parent of ee41034 (COMPLETED):flags/sketch.js
-let c1 = "";
-let c2 = "";
-let c3 = "";
-let c4 = "";
-
-let endt = "";
-
 let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
 let cdone = []; // list of written options to prevent repetition
-<<<<<<< HEAD:flaggame/sketch.js
->>>>>>> parent of ee41034 (COMPLETED):flags/sketch.js
-=======
->>>>>>> parent of ee41034 (COMPLETED):flags/sketch.js
 
 fname = buttons[Math.floor(random(0, 3))]; // first line of options
 
@@ -81,15 +63,9 @@ function draw() {
   endsc();
   randflag();
   drawGame();
-<<<<<<< HEAD:flaggame/sketch.js
-<<<<<<< HEAD:flaggame/sketch.js
   if (windowWidth < 1000 | windowHeight < 800) { // if below screensize limit
     brostop()
   }
-=======
->>>>>>> parent of ee41034 (COMPLETED):flags/sketch.js
-=======
->>>>>>> parent of ee41034 (COMPLETED):flags/sketch.js
 }
 
 function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
@@ -212,20 +188,14 @@ function randflag(){ //should pick and draw random flags and options
     cdone.push(c4);
     buttons = [c1, c2, c3, c4]; // picks random option
 
-<<<<<<< HEAD:flaggame/sketch.js
-<<<<<<< HEAD:flaggame/sketch.js
     fname = buttons[Math.floor(random(0, 4))]; // flag thats drawn is based off of what button was chosen to be correct
 
     index = fnames.indexOf(fname); // finds place in list
     fnames.splice(index, 1); // removes from list to prevent repeat
 
     flag = loadImage("flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
-=======
-=======
->>>>>>> parent of ee41034 (COMPLETED):flags/sketch.js
     fname = buttons[Math.floor(random(0, 3))]; // flag thats drawn is based off of what button was chosen to be correct
     flag = loadImage("/flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
->>>>>>> parent of ee41034 (COMPLETED):flags/sketch.js
 
     cdone  =[]
     state = "game"; 
