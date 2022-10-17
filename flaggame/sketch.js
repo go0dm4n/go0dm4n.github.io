@@ -228,9 +228,9 @@ function randflag(){ //should pick and draw random flags and options
     index = fnames.indexOf(fname); // finds place in list
     fnames.splice(index, 1); // removes from list to prevent repeat
 
-    flag = loadImage("/flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
+    flag = loadImage("flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
 
-    cdone = []
+    cdone = [];
     state = "game"; 
   }
 }
