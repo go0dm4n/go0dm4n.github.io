@@ -3,10 +3,11 @@
 // September 19th 2022
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// - use of arrays (array.push, indexOf, array.splice)
+// - use of random and picking random files
 // PURPLE ON QATAR FLAG TOOOOOOOOO
 
-let flag;
+let flag; //images
 let bgi;
 let logo;
 let settings;
@@ -14,31 +15,29 @@ let fnames;
 let nkey;
 let rkey;
 
-let num = 0;
-
 let fr = 15; // frame rate
 
-let fname;
+let fname; //flag name
 let state = "main"; // game state
 
 let textsize = 50;
 
 let total = 193; // total rounds default
-let continent = "All";
+let continent = "All"; // continent 
 let score = 0; // score
-let progress = 0;
+let progress = 0; // round number
 
 let correct;
 let incorrect;
-let c1 = "";
-let c2 = "";
-let c3 = "";
-let c4 = "";
+let c1 = ""; // option 1
+let c2 = ""; // option 2
+let c3 = ""; // option 3
+let c4 = ""; // option 4
 
 let endt = "";
 
-let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
-let cdone = []; // list of written options to multiple of same option in a round
+let buttons = [c1,c2,c3,c4];  // lets us pick a random button to be correct
+let cdone = []; // list of written options to avoid multiple of same option in a round
 
 fname = buttons[Math.floor(random(0, 4))]; // first line of options
 
@@ -65,7 +64,7 @@ function draw() {
   endsc();
   randflag();
   drawGame();
-  if (windowWidth < 1000 | windowHeight < 800) {
+  if (windowWidth < 1000 | windowHeight < 800) { // if below screensize limit
     brostop()
   }
 }
@@ -170,14 +169,14 @@ function endsc() { //ending screen
     if (score === total) { // changes cool message depending on score
       endt = "cool";
     }
-    if (score >= total * 0.9) {
+    else if (score >= total * 0.9) {
       endt = "almost there!";
     }
     else if (score >= total / 2) {
       endt = "you did okay..";
     }
     else if (score <= total / 2 && score > 0) {
-      endt = "you're kinda bad";
+      endt = "you're bad at this";
     }
     else if (score === total * 0) {
       endt = "how";
