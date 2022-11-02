@@ -5,34 +5,42 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 let grid = [];
+let newGrid = [];
+
 let cols = 10;
 let rows = 10;
 let cellSize;
-let leveln;
+
 let level;
-let butterfly;
+let leveln;
+let levels = [];
+let index;
+
 let fps = 15;
 let mouse = "pencil";
+let xPos;
+let yPos;
 
 function preload(){
-  // leveln = loadJSON("levels/butterfly.json");
+  levels = loadStrings("levels/levellist.txt");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  frameRate(fps)
+  frameRate(fps);
   makeCross();
 }
 
 function draw() {
   background(220);
-  cellSize = (height/cols) / 2;
+  cellSize = height/cols / 2;
   drawCross();
-  clicky()
+  clicky();
+  checkCross();
+  
 }
 
 function makeCross(){
-  level = loadImage("flag-icons-main/flags/4x3/" + leveln + ".svg");
   for (let y = 0; y < cols; y++) {
     grid.push([]);
     for (let x = 0; x < rows; x++) {
@@ -57,16 +65,19 @@ function drawCross(){
 }
 
 function checkCross(){
-  let newGrid = [...grid];
-
+  xPos = Math.floor(mouseX/cellSize);
+  yPos = Math.floor(mouseY/cellSize);
+  // if (grid[yPos][xPos] === 0 && newGrid[yPos][xPos] === 0) {
+  //   console.log("baba");
+  // }
 }
 
 function mousePressed(){
 }
 
 function clicky(){
-  let xPos = Math.floor(mouseX/cellSize);
-  let yPos = Math.floor(mouseY/cellSize);
+  xPos = Math.floor(mouseX/cellSize);
+  yPos = Math.floor(mouseY/cellSize);
   if(mouseIsPressed && mouse === "pencil") {
     if (grid[yPos][xPos] === 0) {
       grid[yPos][xPos] = 1;
@@ -75,5 +86,18 @@ function clicky(){
       grid[yPos][xPos] = 0;
     }
     
+  }
+}
+function doLevels(name){
+  index = levels.indexOf(name);
+  leveln = levels[index];
+  level = loadJSON("levels/" + leveln + ".json");
+  grid = level;
+  // for (let i = 0; )
+}
+
+function keyPressed(){
+  if (key === "n"){
+    doLevels("note");
   }
 }
