@@ -44,7 +44,8 @@ function draw() {
 
 function mainMenu() {
   if (state === "main"){
-    rect 
+    fill()
+    rect(0,0, width, height);
   }
 }
 
@@ -92,7 +93,7 @@ function drawCross(){
       else if (grid[y][x] === 1 ) {
         fill("black");
       }
-      rect(x*cellSize + cols*(cellSize*1.5), y*cellSize + height/4, cellSize, cellSize);
+      rect(x*cellSize, y*cellSize, cellSize, cellSize);
     }
   }
 }
@@ -123,7 +124,7 @@ function clicky(){
 }
 
 function doLevels(name){
-  index = levels.indexOf("note");
+  index = levels.indexOf(name);
   leveln = levels[index];
   level = loadJSON("levels/" + leveln + ".json");
   grid = level;
@@ -133,6 +134,22 @@ function doLevels(name){
       newGrid.push(grid[i][k]);
     }
   }
+}
+
+function randCross(cols, rows) {
+  let emptyAr = [];
+  for (let i = 0; i < cols; i++) {
+    emptyAr.push([]);
+    for (let k = 0; k < rows; k++) {
+      if (random(100) < 50) {
+        emptyAr[i].push(1);
+      }
+      else {
+        emptyAr[i].push(0);
+      }
+    }
+  }
+  return emptyAr;
 }
 
 function keyPressed(){
