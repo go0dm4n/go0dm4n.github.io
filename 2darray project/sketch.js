@@ -13,18 +13,22 @@ let cellSize;
 
 let level;
 let leveln;
-let levels = [];
 let index;
+let levels = [];
+
+
+let backg;
 
 let fps = 15;
 let mouse = "pencil";
 let xPos;
 let yPos;
 
-let state = "main"
+let state = "game";
 
 function preload(){
   levels = loadStrings("levels/levellist.txt");
+  backg = loadImage("images/background.png");
 }
 
 function setup() {
@@ -36,6 +40,7 @@ function setup() {
 function draw() {
   background(220);
   cellSize = height/cols / 2;
+  mainMenu();
   drawCross();
   clicky();
   checkCross();
@@ -44,8 +49,7 @@ function draw() {
 
 function mainMenu() {
   if (state === "main"){
-    fill()
-    rect(0,0, width, height);
+    image(backg, 0, 0, width, height)
   }
 }
 
@@ -85,15 +89,18 @@ function makeCross(){
 }
 
 function drawCross(){
-  for (let y = 0; y < cols; y++) {
-    for (let x = 0; x < rows; x++) {
-      if (grid[y][x] === 0) {
-        fill("white");
+  if (state === "game") {
+    image(backg, 0, 0, width, height)
+    for (let y = 0; y < cols; y++) {
+      for (let x = 0; x < rows; x++) {
+        if (grid[y][x] === 0) {
+          fill("white");
+        }
+        else if (grid[y][x] === 1 ) {
+          fill("black");
+        }
+        rect(x*cellSize + width/3, y*cellSize + height/4, cellSize, cellSize);
       }
-      else if (grid[y][x] === 1 ) {
-        fill("black");
-      }
-      rect(x*cellSize, y*cellSize, cellSize, cellSize);
     }
   }
 }
@@ -110,8 +117,8 @@ function mousePressed(){
 }
 
 function clicky(){
-  xPos = Math.floor(mouseX/cellSize);
-  yPos = Math.floor(mouseY/cellSize);
+  xPos = Math.floor((mouseX-width/3) /cellSize);
+  yPos = Math.floor((mouseY - height/4)/cellSize);
   if(mouseIsPressed && mouse === "pencil") {
     if (grid[yPos][xPos] === 0) {
       grid[yPos][xPos] = 1;
@@ -128,28 +135,28 @@ function doLevels(name){
   leveln = levels[index];
   level = loadJSON("levels/" + leveln + ".json");
   grid = level;
-  for (let i = 0; i < grid.length; i++) {
-    newGrid.push(grid[i]);
-    for (let k = 0; k < grid[i].length; k++) {
-      newGrid.push(grid[i][k]);
+  for (let y = 0; y < cols; y++) {
+    for (let x = 0; x < rows; x++) {
+      newGrid.push(grid[y][x]);
     }
   }
+  console.log(newGrid);
 }
 
+
 function randCross(cols, rows) {
-  let emptyAr = [];
   for (let i = 0; i < cols; i++) {
-    emptyAr.push([]);
+    newGrid.push([]);
     for (let k = 0; k < rows; k++) {
       if (random(100) < 50) {
-        emptyAr[i].push(1);
+        newGrid[i].push(1);
       }
       else {
-        emptyAr[i].push(0);
+        newGrid[i].push(0);
       }
     }
   }
-  return emptyAr;
+  return newGrid;
 }
 
 function keyPressed(){
