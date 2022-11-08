@@ -12,12 +12,16 @@ let rows = 10;
 let cellSize;
 
 let level;
-let leveln;
+let levels;
 let index;
-let levels = [];
-
+let levelns = [];
+let leveln;
 
 let backg;
+
+let butterfly;
+let questionmark;
+let note;
 
 let fps = 15;
 let mouse = "pencil";
@@ -27,8 +31,10 @@ let yPos;
 let state = "game";
 
 function preload(){
-  levels = loadStrings("levels/levellist.txt");
+  levelns = loadStrings("levels/levellist.txt");
   backg = loadImage("images/background.png");
+  note = loadJSON("levels/note.json ");
+  questionmark = loadJSON("levels/questionmark.json ");
 }
 
 function setup() {
@@ -90,7 +96,7 @@ function makeCross(){
 
 function drawCross(){
   if (state === "game") {
-    image(backg, 0, 0, width, height)
+    image(backg, 0, 0, width, height);
     for (let y = 0; y < cols; y++) {
       for (let x = 0; x < rows; x++) {
         if (grid[y][x] === 0) {
@@ -130,43 +136,48 @@ function clicky(){
   }
 }
 
-function doLevels(name){
-  index = levels.indexOf(name);
-  leveln = levels[index];
-  level = loadJSON("levels/" + leveln + ".json");
-  grid = level;
-  for (let y = 0; y < cols; y++) {
-    for (let x = 0; x < rows; x++) {
-      newGrid.push(grid[y][x]);
-    }
-  }
-  console.log(newGrid);
-}
+// function doLevels(name){
+//   index = levels.indexOf(name);
+//   leveln = levels[index];
+//   grid = level;
+//   for (let y = 0; y < cols; y++) {
+//     for (let x = 0; x < rows; x++) {
+//       console.log(grid[y][x]);
+//     }
+//   }
+//   console.log(newGrid);
+// }
 
 
-function randCross(cols, rows) {
-  for (let i = 0; i < cols; i++) {
-    newGrid.push([]);
-    for (let k = 0; k < rows; k++) {
-      if (random(100) < 50) {
-        newGrid[i].push(1);
-      }
-      else {
-        newGrid[i].push(0);
-      }
-    }
-  }
-  return newGrid;
-}
+// function randCross(cols, rows) {
+//   for (let y = 0; y < cols; y++) {
+//     newGrid.push(grid[y]);
+//     for (let x = 0; x < rows; x++) {
+//       if (random(100) < 50) {
+//         newGrid[x].push(1);
+//       }
+//       else {
+//         newGrid[x].push(0);
+//       }
+//     }
+//   }
+//   return newGrid;
+// }
 
-function keyPressed(){
+function keyPressed() {
   if (key === "n"){
-    doLevels("note");
+    // doLevels("note");
+    grid = note;  
+    for (let y = 0; y < cols; y++) {
+      newGrid.push(grid[y]);
+      for (let x = 0; x < rows; x++) {
+        newGrid[y].push(grid[y][x]);
+      }
+    }
+    console.log(newGrid);
   }
-  if (key === "q"){
-    doLevels("questionmark");
-  }
-  if (key === "n"){
-    doLevels("note");
+  if (key === "b"){
+    grid = newGrid;
+
   }
 }
