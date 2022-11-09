@@ -13,6 +13,9 @@ let settings;
 let fnames;
 let nkey;
 let rkey;
+let startb;
+
+let num = 0;
 
 let num = 0;
 
@@ -22,6 +25,8 @@ let fname;
 let state = "main"; // game state
 
 let textsize = 50;
+
+let index; // place in array
 
 let total = 193; // total rounds default
 let continent = "All";
@@ -40,6 +45,10 @@ let endt = "";
 let buttons = [c1,c2,c3,c4];  // picks a random button to be correct
 let cdone = []; // list of written options to multiple of same option in a round
 
+<<<<<<< HEAD
+=======
+fname = buttons[Math.floor(random(0, 4))]; // first line of options
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
 
 function preload() {
   bgi = loadImage("imgs/allflags.png");
@@ -49,7 +58,11 @@ function preload() {
   settings = loadImage("imgs/settings.png");
   nkey = loadImage("imgs/nkey.png");
   rkey = loadImage("imgs/rkey.png");
+<<<<<<< HEAD
   startb = loadImage("imgs/startb.png")
+=======
+  startb = loadImage("imgs/startb.png");
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
 }
 
 
@@ -64,13 +77,19 @@ function draw() {
   endsc();
   randflag();
   drawGame();
+<<<<<<< HEAD
   if (windowWidth < 1000 | windowHeight < 800) {
     brostop()
+=======
+  if (windowWidth < 800 | windowHeight < 600) {
+    brostop();
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
   }
 }
 
 function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){ //draws rectangle with text
 
+<<<<<<< HEAD
   if (state != "wait") {
     if (mouseIn(x, x + width, y, y + height)){ //darkens rectangle if mouse is in
       rectcolor -= 50
@@ -78,6 +97,15 @@ function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
 
     if (!mouseIn(x, x + width, y, y + height)){ //lightens rectangle if mouse is out
       rectcolor += 50
+=======
+  if (state !== "wait") {
+    if (mouseIn(x, x + width, y, y + height)){ //darkens rectangle if mouse is in
+      rectcolor -= 50;
+    }
+
+    if (!mouseIn(x, x + width, y, y + height)){ //lightens rectangle if mouse is out
+      rectcolor += 50;
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
     }
   }
 
@@ -96,12 +124,21 @@ function mouseIn(left, right, top, bottom){ //button parameter function
 }
 
 function brostop(){ //if screen is too small it displays message
+<<<<<<< HEAD
   fill("red")
   rect(0,0, windowWidth,windowHeight)
 
   fill("white")
   textSize(100)
   text("screen too small :(", 0, windowHeight/2)
+=======
+  fill("red");
+  rect(0,0, windowWidth,windowHeight);
+
+  fill("white");
+  textSize(100);
+  text("screen too small :(", 0, windowHeight/2);
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
 }
 
 function mainmenu(){ //draws main menu
@@ -124,7 +161,10 @@ function settingsmenu(){ //draws settings menu
   if (state === "settings") {
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
 
+<<<<<<< HEAD
     image(settings, 10, 10, settings.width/6, settings.height/6); // settings symbol
+=======
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
     image(settings, 10, 10, settings.width/4, settings.height/4); // settings symbol
 
     fill(128, 128, 128);
@@ -165,7 +205,12 @@ function endsc() { //ending screen
   if (state === "end") {
     image(bgi, 0, 0, windowWidth, windowHeight); // background image
     fill(27,27,28);
+<<<<<<< HEAD
     rect(windowWidth/2 - windowWidth/4, flag.height/2, windowWidth/2, windowHeight - 300); //end rectangle
+=======
+    rect(windowWidth/2 - windowWidth/4, flag.height/2, windowWidth/2, windowHeight - 300); // end rectangle
+
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
     if (score === total) { // changes cool message depending on score
       endt = "cool";
     }
@@ -181,7 +226,10 @@ function endsc() { //ending screen
     else if (score === total * 0) {
       endt = "how";
     }
+<<<<<<< HEAD
     console.log(total)
+=======
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
 
     fill(250);
     textSize(100);
@@ -197,26 +245,25 @@ function randflag(){ //should pick and draw random flags and options
     c1 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 1
     cdone.push(c1);
 
-    c2 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 2
+    c2 = fnames[Math.floor(random(0, fnames.length))]; // option 2
 
     while (cdone.includes(c2)) { // whiile option is in list
       c2 = fnames[Math.floor(random(0, fnames.length))]; // reroll
     }
     cdone.push(c2); //adds to list
 
-    c3 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 3
+    c3 = fnames[Math.floor(random(0, fnames.length))]; // option 3
 
     while (cdone.includes(c3)) {
-      c3 = fnames[Math.floor(random(0, fnames.length))]; // reroll
+      c3 = fnames[Math.floor(random(0, fnames.length))]; 
     }
     cdone.push(c3);
 
-    c4 = fnames[Math.floor(random(0, fnames.length))]; // rand flag for option 4
+    c4 = fnames[Math.floor(random(0, fnames.length))]; //  option 4
 
     while (cdone.includes(c4)) {
-      c4 = fnames[Math.floor(random(0, fnames.length))]; // reroll
+      c4 = fnames[Math.floor(random(0, fnames.length))];
     }
-    
     cdone.push(c4);
 
     buttons = [c1, c2, c3, c4]; // picks random option
@@ -226,9 +273,15 @@ function randflag(){ //should pick and draw random flags and options
     index = fnames.indexOf(fname); // finds place in list
     fnames.splice(index, 1); // removes from list to prevent repeat
 
+<<<<<<< HEAD
     flag = loadImage("/flags/flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
 
     cdone = []
+=======
+    flag = loadImage("flag-icons-main/flags/4x3/" + fname + ".svg"); // redefines flag
+
+    cdone = [];
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
     state = "game"; 
   }
 }
@@ -242,7 +295,10 @@ function drawGame() {
 
     image(rkey, 20, 110, 50, 50); // R key image
     
+<<<<<<< HEAD
     fill(173,216,230);
+=======
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
     fill(27,27,28);
     rect(windowWidth/ 3, 30, windowWidth/3, windowHeight - 100); // rectangle for options and flag
 
@@ -282,6 +338,7 @@ function drawGame() {
       makeButton(windowWidth/2 - textsize * c1.length / 4, flag.height * 3, textsize * c1.length / 2 + 30, 50, "red", 0, textsize, c1); // option 1 button
     }
 
+<<<<<<< HEAD
     if (incorrect === c2) { // if this option was picked incorrectly it will color it red
       makeButton(windowWidth/2 - textsize * c2.length / 4, flag.height * 3 + 70, textsize * c2.length / 2 + 30, 50, "red", 0, textsize, c2); // option 1 button
     }
@@ -291,6 +348,17 @@ function drawGame() {
     }
 
     if (incorrect === c4) { // if this option was picked incorrectly it will color it red
+=======
+    if (incorrect === c2) { 
+      makeButton(windowWidth/2 - textsize * c2.length / 4, flag.height * 3 + 70, textsize * c2.length / 2 + 30, 50, "red", 0, textsize, c2); // option 1 button
+    }
+
+    if (incorrect === c3) { 
+      makeButton(windowWidth/2 - textsize * c3.length / 4, flag.height * 3 + 140, textsize * c3.length / 2 + 30, 50, "red", 0, textsize, c3); // option 1 button
+    }
+
+    if (incorrect === c4) { 
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
       makeButton(windowWidth/2 - textsize * c4.length / 4, flag.height * 3 + 210, textsize * c4.length / 2 + 30, 50, "red", 0, textsize, c4); // option 1 button
     }
 
@@ -299,11 +367,6 @@ function drawGame() {
   if (state === "game" && progress === total) { // ends the game if round limit is reached
     state = "end";
   }
-}
-
-function mouseIn(left, right, top, bottom){ //button parameter function
-  return mouseX >= left && mouseX <= right && 
-  mouseY >= top && mouseY <= bottom;
 }
 
 function mousePressed(){
@@ -366,7 +429,10 @@ function mousePressed(){
       continent = "All";
       total = 193;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
     fnames = loadStrings("contnames/" + continent + ".txt"); // changes which text file it grabs names from based on continent
   }
 
@@ -384,7 +450,10 @@ function mousePressed(){
     if (mouseIn(window.width/2 - startb.width/6, (window.width/2 - startb.width/6) + startb.width/3, logo.height, logo.height + startb.height/3)){ // start mechanism
       state = "switch";
     }
+<<<<<<< HEAD
     if (mouseIn(10, windowWidth/6 + 10, 10, windowHeight/6 + 10)) { // settings button mechanism
+=======
+>>>>>>> 61468cc0cc4ce628e3c643f0c904530094b40e95
 
     if (mouseIn(10, settings.width/4 + 10, 10, settings.height/4 + 10)) { // settings button mechanism
       state = "settings";
