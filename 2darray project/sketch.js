@@ -6,8 +6,8 @@
 // - describe what you did to take this project "above and beyond"
 let grid = [];
 let newGrid = [];
-let numArx = []
-let numAry = []
+
+let nums = [];
 
 let cols = 10;
 let rows = 10;
@@ -41,22 +41,23 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  background(220);
   frameRate(fps);
   makeCross();
 }
 
 function draw() {
-  background(220);
   cellSize = height/cols / 2;
   mainMenu();
   drawCross();
   clicky();
   checkCross();
+  
 }
 
 function mainMenu() {
   if (state === "main"){
-    image(backg, 0, 0, width, height)
+    image(backg, 0, 0, width, height);
   }
 }
 
@@ -97,7 +98,7 @@ function makeCross(){
 
 function drawCross(){
   if (state === "game") {
-    // image(backg, 0, 0, width, height);
+    image(backg, 0, 0, width, height);
     for (let y = 0; y < cols; y++) {
       for (let x = 0; x < rows; x++) {
         if (grid[y][x] === 0) {
@@ -120,42 +121,11 @@ function checkCross(){
   // }
 }
 
-function drawNumbers(){
-  numArx = []
-  let sum = 0
-  fill("black");
-  textSize(30);
-  for (let y = 0; y < cols; y++) {
-    numArx.push([])
-    for (let x = 0; x < rows; x++) {
-      if (newGrid[y][x] === 1) {
-        sum += 1
-      }
-      if (newGrid[y][x] === 0) {
-        if (sum !== 0) {
-          numArx[y].push(sum);
-        }
-        sum = 0
-      }
+function drawNum(){
+  for (let y = 0; y <= cols; y++){
+    for (let x = 0; x <= cols; x++) {
+      console.log()
     }
-  text(numArx[y], width/3 - 30 * numArx[y].length, height/4 + (cellSize * y) + 30); //writes text
-  }
-
-  numAry = []
-  for (let x = 0; x < rows; x++) {
-    numAry.push([])
-    for (let y = 0; y < cols; y++) {
-      if (newGrid[y][x] === 1) {
-        sum += 1
-      }
-      if (newGrid[y][x] === 0) {
-        if (sum !== 0) {
-          numAry[x].push(sum);
-        }
-        sum = 0
-      }
-    }
-  text(numAry[x], width/3 + (cellSize * x) + 30, height/4 - 30 * numAry[x].length); //writes text
   }
 }
 
@@ -186,27 +156,27 @@ function clicky(){
 // }
 
 
-// function randCross(cols, rows) {
-//   for (let y = 0; y < cols; y++) {
-//     newGrid.push(grid[y]);
-//     for (let x = 0; x < rows; x++) {
-//       if (random(100) < 50) {
-//         newGrid[x].push(1);
-//       }
-//       else {
-//         newGrid[x].push(0);
-//       }
-//     }
-//   }
-//   return newGrid;
-// }
+function randCross(cols, rows) {
+  for (let y = 0; y < cols; y++) {
+    newGrid.push(grid[y]);
+    for (let x = 0; x < rows; x++) {
+      if (random(100) < 50) {
+        newGrid[x].push(1);
+      }
+      else {
+        newGrid[x].push(0);
+      }
+    }
+  }
+  return newGrid;
+}
 
 function keyPressed() {
   if (key === "n"){
     // doLevels("note");
     grid = note;  
     for (let y = 0; y < cols; y++) {
-      newGrid.push([]);
+      newGrid.push(grid[y]);
       for (let x = 0; x < rows; x++) {
         newGrid[y].push(grid[y][x]);
       }
@@ -214,7 +184,7 @@ function keyPressed() {
     console.log(newGrid);
   }
   if (key === "b"){
-    drawNumbers()
+    grid = newGrid;
 
   }
 }
