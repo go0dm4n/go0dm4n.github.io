@@ -1,3 +1,4 @@
+
 // Project Title
 // Your Name
 // Date
@@ -6,8 +7,8 @@
 // - describe what you did to take this project "above and beyond"
 let grid = [];
 let newGrid = [];
-
-let nums = [];
+let numArx = []
+let numAry = []
 
 let cols = 10;
 let rows = 10;
@@ -41,7 +42,7 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(220);
+  image(backg, 0, 0, width, height);
   frameRate(fps);
   makeCross();
 }
@@ -51,13 +52,13 @@ function draw() {
   mainMenu();
   drawCross();
   clicky();
-  checkCross();
+  // checkCross();
   
 }
 
 function mainMenu() {
   if (state === "main"){
-    image(backg, 0, 0, width, height);
+    image(backg, 0, 0, width, height)
   }
 }
 
@@ -98,7 +99,6 @@ function makeCross(){
 
 function drawCross(){
   if (state === "game") {
-    image(backg, 0, 0, width, height);
     for (let y = 0; y < cols; y++) {
       for (let x = 0; x < rows; x++) {
         if (grid[y][x] === 0) {
@@ -113,47 +113,93 @@ function drawCross(){
   }
 }
 
-function checkCross(){
-  xPos = Math.floor(mouseX/cellSize + cols*(cellSize*1.5));
-  yPos = Math.floor(mouseY/cellSize + height/4);
-  // if (grid[yPos][xPos] === 0 && newGrid[yPos][xPos] === 0) {
-  //   console.log("baba");
-  // }
-}
+// function checkCross(){
+//   xPos = Math.floor(mouseX/cellSize + cols*(cellSize*1.5));
+//   yPos = Math.floor(mouseY/cellSize + height/4);
+//   if (newGrid[yPos][xPos] === 1) {
+//     grid[yPos][xPos] = 1;
+//   }
+//   if (newGrid[yPos][xPos] === 0) {
+//     grid[yPos][xPos] = 0;
+//   }
+//   if (newGrid[yPos][xPos] === 0) {
+//     grid[yPos][xPos] = 2;
+//   }
+// }
 
-function drawNum(){
-  for (let y = 0; y <= cols; y++){
-    for (let x = 0; x <= cols; x++) {
-      console.log()
+function drawNumbers(){
+  numArx = [];
+  let sum = 0;
+  fill("black");
+  textSize(30);
+  for (let y = 0; y < cols; y++) {
+    numArx.push([]);
+    for (let x = 0; x < rows; x++) {
+      if (newGrid[y][x] === 1) {
+        sum += 1;
+        if (x === rows - 1){
+          numArx[y].push(sum);
+          sum = 0;
+        }
+      }
+      if (newGrid[y][x] === 0) {
+        if (sum !== 0) {
+          numArx[y].push(sum);
+        }
+        sum = 0;
+      }
     }
+    text(numArx[y], width/3 - 30 * numArx[y].length, height/4 + (cellSize * y) + 30); //writes text
+  }
+
+  numAry = [];
+  for (let x = 0; x < rows; x++) {
+    numAry.push([]);
+    for (let y = 0; y < cols; y++) {
+      if (newGrid[y][x] === 1) {
+        sum += 1;
+        if (y === cols - 1){
+          numAry[x].push(sum);
+          sum = 0;
+        }
+      }
+      if (newGrid[y][x] === 0) {
+        if (sum !== 0) {
+          numAry[x].push(sum);
+        }
+        sum = 0;
+      }
+    }
+    text(numAry[x], width/3 + (cellSize * x), height/4 - 30 * numAry[x].length); //writes text
   }
 }
 
 function clicky(){
   xPos = Math.floor((mouseX-width/3) /cellSize);
   yPos = Math.floor((mouseY - height/4)/cellSize);
-  if(mouseIsPressed && mouse === "pencil") {
-    if (grid[yPos][xPos] === 0) {
+  if(mouseIsPressed) {
+    console.log("click")
+    if (newGrid[yPos][xPos] === 1 && mouse === "pencil") {
       grid[yPos][xPos] = 1;
     }
-    else if (grid[yPos][xPos] === 1) {
-      grid[yPos][xPos] = 0;
+    if (newGrid[yPos][xPos] === 0 && mouse === "cross") {
+      grid[yPos][xPos] = 1;
     }
     
   }
 }
 
-// function doLevels(name){
-//   index = levels.indexOf(name);
-//   leveln = levels[index];
-//   grid = level;
-//   for (let y = 0; y < cols; y++) {
-//     for (let x = 0; x < rows; x++) {
-//       console.log(grid[y][x]);
-//     }
-//   }
-//   console.log(newGrid);
-// }
+function doLevels(name){
+  index = levels.indexOf(name);
+  leveln = levels[index];
+  grid = level;
+  for (let y = 0; y < cols; y++) {
+    for (let x = 0; x < rows; x++) {
+      console.log(grid[y][x]);
+    }
+  }
+  console.log(newGrid);
+}
 
 
 function randCross(cols, rows) {
@@ -168,23 +214,27 @@ function randCross(cols, rows) {
       }
     }
   }
-  return newGrid;
+  grid = newGrid; 
 }
 
 function keyPressed() {
   if (key === "n"){
     // doLevels("note");
-    grid = note;  
-    for (let y = 0; y < cols; y++) {
-      newGrid.push(grid[y]);
-      for (let x = 0; x < rows; x++) {
-        newGrid[y].push(grid[y][x]);
-      }
-    }
-    console.log(newGrid);
+    newGrid = note;  
+    // for (let y = 0; y < cols; y++) {
+    //   newGrid.push([]);
+    //   for (let x = 0; x < rows; x++) {
+    //     newGrid[y].push(grid[y][x]);
+    //   }
   }
   if (key === "b"){
-    grid = newGrid;
+    drawNumbers();
 
+  }
+  if (key === "r"){
+    randCross();
+  }
+  if (key === "q"){
+    newGrid = questionmark;
   }
 }
