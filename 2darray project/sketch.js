@@ -62,6 +62,9 @@ function mainMenu() {
   }
 }
 
+function drawStuff(){
+
+}
 function mouseIn(left, right, top, bottom){ //button parameter function
   return mouseX >= left && mouseX <= right && 
   mouseY >= top && mouseY <= bottom;
@@ -177,8 +180,8 @@ function drawNumbers(){
 function clicky(){
   xPos = Math.floor((mouseX-width/3) /cellSize);
   yPos = Math.floor((mouseY - height/4)/cellSize);
-  if(mouseIsPressed) {
-    console.log("click")
+  if(mouseIsPressed && xPos < 10 && yPos < 10 && xPos > -1 && yPos > -1) {
+    console.log("click");
     if (newGrid[yPos][xPos] === 1 && mouse === "pencil") {
       grid[yPos][xPos] = 1;
     }
