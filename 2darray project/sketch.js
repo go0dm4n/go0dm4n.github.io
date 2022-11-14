@@ -5,6 +5,7 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
+
 let grid = [];
 let newGrid = [];
 let numArx = []
@@ -13,12 +14,15 @@ let numAry = []
 let cols = 10;
 let rows = 10;
 let cellSize;
+let textsize = 30;
 
-let level;
-let levels;
 let index;
 let levelns = [];
 let leveln;
+let level;
+ 
+let mistakes = 0;
+let progress = 0;
 
 let backg;
 
@@ -26,18 +30,18 @@ let butterfly;
 let questionmark;
 let note;
 
-let fps = 15;
+let fps = 10;
 let mouse = "pencil";
 let xPos;
 let yPos;
 
-let state = "game";
+let state = "main";
 
 function preload(){
   levelns = loadStrings("levels/levellist.txt");
   backg = loadImage("images/background.png");
-  note = loadJSON("levels/note.json ");
-  questionmark = loadJSON("levels/questionmark.json ");
+  startb = loadImage("images/startbp.png");
+  pencil = loadImage("images/pencil.png");
 }
 
 function setup() {
@@ -48,23 +52,44 @@ function setup() {
 }
 
 function draw() {
-  cellSize = height/cols / 2;
-  mainMenu();
+  cellSize = (height/cols) / 2;
+  checkCross()
   drawCross();
-  clicky();
-  // checkCross();
-  
+  mainMenu();
+  drawStuff()
 }
 
 function mainMenu() {
   if (state === "main"){
-    image(backg, 0, 0, width, height)
+    image(startb, windowWidth/2 - startb.width/4, windowHeight /1.5, startb.width/2, startb.height/2);
   }
 }
 
 function drawStuff(){
+  if (state === "game") {
+    makeButton(width/3, height/4 + cellSize * rows, textsize * 6, textsize, 255, 0, textsize, "Mistakes: " + mistakes);
+    makeButton(width/3 + textsize * 3, height/11, textsize * 11, textsize * 3, 255, 0, textsize * 3, "Level " + (progress + 1));
+
+    if (mouse === "pencil") {
+      fill(65, 89, 221)
+    }
+    fill(60, 149, 221)
+    rect(width/3 + cellSize * cols - 220, height/4 + cellSize * rows + 10, 100, 100)
+    image(pencil, width/3 + cellSize * cols - 210, height/4 + cellSize * rows + 10, 100, 100)
+
+    if (mouse === "cross") {
+      fill(65, 89, 221)
+    }
+    fill(133, 38, 36)
+    rect(width/3 + cellSize * cols - 100, height/4 + cellSize * rows + 10, 100, 100)
+  }
+  else if (state === "change") {
+    makeCross()
+    doLevels()
+  } 
 
 }
+
 function mouseIn(left, right, top, bottom){ //button parameter function
   return mouseX >= left && mouseX <= right && 
   mouseY >= top && mouseY <= bottom;
@@ -85,10 +110,25 @@ function makeButton(x, y, width, height, rectcolor, textcolor, textsize, textc){
 
   fill(textcolor);
   textSize(textsize);
-  text(textc, x, y + textsize - 5); //writes text
+  text(textc, x + textsize/4, y + textsize - 5); //writes text
 
 }
 
+function mousePressed() {
+  if (state === "main" && mouseIn(windowWidth/2 - startb.width/4, windowWidth/2 - startb.width/4 + startb.width/2, windowHeight /1.5, windowHeight /1.5 + startb.height/2)) {
+    state = "game";
+    image(backg, 0, 0, width, height);
+    doLevels()
+  }
+  if (state === "game" && mouseIn(width/3 + cellSize * cols - 220, width/3 + cellSize * cols - 120,  height/4 + cellSize * rows + 10,  height/4 + cellSize * rows + 110)) {
+    mouse = "pencil"
+    image(backg, 0, 0, width, height);
+  }
+  else if (state === "game" && mouseIn(width/3 + cellSize * cols - 100, width/3 + cellSize * cols, height/4 + cellSize * rows + 10, height/4 + cellSize * rows + 110)) {
+    mouse = "cross"
+    image(backg, 0, 0, width, height);
+  }
+}
 
 function makeCross(){
   for (let y = 0; y < cols; y++) {
@@ -97,7 +137,6 @@ function makeCross(){
       grid[y].push(0);
     }
   }
-  return grid;
 }
 
 function drawCross(){
@@ -106,35 +145,36 @@ function drawCross(){
       for (let x = 0; x < rows; x++) {
         if (grid[y][x] === 0) {
           fill("white");
+          strokeWeight(1)
         }
-        else if (grid[y][x] === 1 ) {
+        if (grid[y][x] === 1 ) {
           fill("black");
+          strokeWeight(1)
+        }
+        if (grid[y][x] === 2 ) {
+          fill("red")
+        }
+        if (grid[y][x] === 3 ) {
+          line(x*cellSize + width/3, y*cellSize + height/4, x*cellSize + width/3 + cellSize, y*cellSize + height/4 + cellSize)
+          line(x*cellSize + width/3, y*cellSize + height/4 + cellSize, x*cellSize + width/3 + cellSize, y*cellSize + height/4)
         }
         rect(x*cellSize + width/3, y*cellSize + height/4, cellSize, cellSize);
       }
     }
+
+    strokeWeight(3)
+    noFill()
+    rect(width/3, height/4, cellSize * cols, cellSize * rows)
+    line(width/3 + cols * cellSize/2, height/4, width/3 + cols * cellSize/2, height/4 + cellSize * rows)
+    line(width/3, height/4 + cols * cellSize/2, width/3 + cellSize * cols, height/4 + cols * cellSize/2)
+
   }
 }
-
-// function checkCross(){
-//   xPos = Math.floor(mouseX/cellSize + cols*(cellSize*1.5));
-//   yPos = Math.floor(mouseY/cellSize + height/4);
-//   if (newGrid[yPos][xPos] === 1) {
-//     grid[yPos][xPos] = 1;
-//   }
-//   if (newGrid[yPos][xPos] === 0) {
-//     grid[yPos][xPos] = 0;
-//   }
-//   if (newGrid[yPos][xPos] === 0) {
-//     grid[yPos][xPos] = 2;
-//   }
-// }
 
 function drawNumbers(){
   numArx = [];
   let sum = 0;
   fill("black");
-  textSize(30);
   for (let y = 0; y < cols; y++) {
     numArx.push([]);
     for (let x = 0; x < rows; x++) {
@@ -173,37 +213,55 @@ function drawNumbers(){
         sum = 0;
       }
     }
-    text(numAry[x], width/3 + (cellSize * x), height/4 - 30 * numAry[x].length); //writes text
+    text(numAry[x][y], width/3 + (cellSize * x), height/4 - 30 * y); //writes text
   }
 }
 
-function clicky(){
-  xPos = Math.floor((mouseX-width/3) /cellSize);
+function checkCross(){
+  xPos = Math.floor((mouseX - width/3) /cellSize);
   yPos = Math.floor((mouseY - height/4)/cellSize);
-  if(mouseIsPressed && xPos < 10 && yPos < 10 && xPos > -1 && yPos > -1) {
-    console.log("click");
-    if (newGrid[yPos][xPos] === 1 && mouse === "pencil") {
-      grid[yPos][xPos] = 1;
+  if (state === "game") {
+    if(mouseIsPressed && xPos < 10 && yPos < 10 && xPos > -1 && yPos > -1) {
+
+      if (newGrid[yPos][xPos] === 1 && mouse === "pencil") {
+        grid[yPos][xPos] = 1;
+      }
+
+      else if (newGrid[yPos][xPos] === 0 && mouse === "pencil") {
+        grid[yPos][xPos] = 2;
+        mistakes += 1
+      }
+
+      else if (newGrid[yPos][xPos] === 0 && mouse === "cross") {
+        grid[yPos][xPos] = 3;
+      }
+
+      else if (newGrid[yPos][xPos] === 1 && mouse === "cross") {
+        grid[yPos][xPos] = 2;
+        mistakes += 1
+      }
+      
     }
-    if (newGrid[yPos][xPos] === 0 && mouse === "cross") {
-      grid[yPos][xPos] = 1;
+    if (grid === newGrid) {
+      progress += 1
+      state = "change"
     }
-    
+    if (mistakes === 3) {
+      gameOver()
+    }
   }
 }
 
-function doLevels(name){
-  index = levels.indexOf(name);
-  leveln = levels[index];
-  grid = level;
-  for (let y = 0; y < cols; y++) {
-    for (let x = 0; x < rows; x++) {
-      console.log(grid[y][x]);
-    }
-  }
-  console.log(newGrid);
+function doLevels(){
+  leveln = levelns[progress];
+  level = loadJSON("levels/" + leveln + ".json");
+  newGrid = level;
+  drawNumbers()
 }
 
+function gameOver(){
+
+}
 
 function randCross(cols, rows) {
   for (let y = 0; y < cols; y++) {
@@ -217,27 +275,15 @@ function randCross(cols, rows) {
       }
     }
   }
-  grid = newGrid; 
 }
 
 function keyPressed() {
-  if (key === "n"){
-    // doLevels("note");
-    newGrid = note;  
-    // for (let y = 0; y < cols; y++) {
-    //   newGrid.push([]);
-    //   for (let x = 0; x < rows; x++) {
-    //     newGrid[y].push(grid[y][x]);
-    //   }
-  }
-  if (key === "b"){
-    drawNumbers();
-
-  }
   if (key === "r"){
-    randCross();
+    console.log(newGrid)
+    console.log(grid)
   }
   if (key === "q"){
-    newGrid = questionmark;
+    progress = 1
+    doLevels()
   }
 }
