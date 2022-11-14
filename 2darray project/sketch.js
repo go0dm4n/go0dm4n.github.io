@@ -30,6 +30,9 @@ let butterfly;
 let questionmark;
 let note;
 
+let startb;
+let pencil;
+
 let fps = 10;
 let mouse = "pencil";
 let xPos;
@@ -53,10 +56,10 @@ function setup() {
 
 function draw() {
   cellSize = (height/cols) / 2;
-  checkCross()
+  checkCross();
   drawCross();
   mainMenu();
-  drawStuff()
+  drawStuff();
 }
 
 function mainMenu() {
@@ -145,28 +148,28 @@ function drawCross(){
       for (let x = 0; x < rows; x++) {
         if (grid[y][x] === 0) {
           fill("white");
-          strokeWeight(1)
+          strokeWeight(1);
         }
         if (grid[y][x] === 1 ) {
           fill("black");
-          strokeWeight(1)
+          strokeWeight(1);
         }
         if (grid[y][x] === 2 ) {
-          fill("red")
+          fill("red");
         }
         if (grid[y][x] === 3 ) {
-          line(x*cellSize + width/3, y*cellSize + height/4, x*cellSize + width/3 + cellSize, y*cellSize + height/4 + cellSize)
-          line(x*cellSize + width/3, y*cellSize + height/4 + cellSize, x*cellSize + width/3 + cellSize, y*cellSize + height/4)
+          line(x*cellSize + width/3, y*cellSize + height/4, x*cellSize + width/3 + cellSize, y*cellSize + height/4 + cellSize);
+          line(x*cellSize + width/3, y*cellSize + height/4 + cellSize, x*cellSize + width/3 + cellSize, y*cellSize + height/4);
         }
         rect(x*cellSize + width/3, y*cellSize + height/4, cellSize, cellSize);
       }
     }
 
-    strokeWeight(3)
-    noFill()
-    rect(width/3, height/4, cellSize * cols, cellSize * rows)
-    line(width/3 + cols * cellSize/2, height/4, width/3 + cols * cellSize/2, height/4 + cellSize * rows)
-    line(width/3, height/4 + cols * cellSize/2, width/3 + cellSize * cols, height/4 + cols * cellSize/2)
+    strokeWeight(3);
+    noFill();
+    rect(width/3, height/4, cellSize * cols, cellSize * rows);
+    line(width/3 + cols * cellSize/2, height/4, width/3 + cols * cellSize/2, height/4 + cellSize * rows);
+    line(width/3, height/4 + cols * cellSize/2, width/3 + cellSize * cols, height/4 + cols * cellSize/2);
 
   }
 }
@@ -213,7 +216,7 @@ function drawNumbers(){
         sum = 0;
       }
     }
-    text(numAry[x][y], width/3 + (cellSize * x), height/4 - 30 * y); //writes text
+    text(numAry[x], width/3 + (cellSize * x), height/4 - 30); //writes text
   }
 }
 
@@ -227,27 +230,27 @@ function checkCross(){
         grid[yPos][xPos] = 1;
       }
 
-      else if (newGrid[yPos][xPos] === 0 && mouse === "pencil") {
+      else if (newGrid[yPos][xPos] === 0 && grid[yPos][xPos] === 0 && mouse === "pencil") {
         grid[yPos][xPos] = 2;
-        mistakes += 1
+        mistakes += 1;
       }
 
       else if (newGrid[yPos][xPos] === 0 && mouse === "cross") {
         grid[yPos][xPos] = 3;
       }
 
-      else if (newGrid[yPos][xPos] === 1 && mouse === "cross") {
+      else if (newGrid[yPos][xPos] === 1 && grid[yPos][xPos] === 1 && mouse === "cross") {
         grid[yPos][xPos] = 2;
-        mistakes += 1
+        mistakes += 1;
       }
       
     }
     if (grid === newGrid) {
-      progress += 1
-      state = "change"
+      progress += 1;
+      state = "change";
     }
     if (mistakes === 3) {
-      gameOver()
+      gameOver();
     }
   }
 }
@@ -256,7 +259,7 @@ function doLevels(){
   leveln = levelns[progress];
   level = loadJSON("levels/" + leveln + ".json");
   newGrid = level;
-  drawNumbers()
+  drawNumbers();
 }
 
 function gameOver(){
