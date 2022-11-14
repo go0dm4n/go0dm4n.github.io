@@ -263,7 +263,8 @@ function doLevels(){
 }
 
 function gameOver(){
-
+  progress = 0
+  
 }
 
 function randCross(cols, rows) {
