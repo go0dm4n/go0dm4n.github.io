@@ -6,7 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 
 class Walker {
-  constructor(x, y, color) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
     this.color = color;
@@ -38,24 +38,28 @@ class Walker {
   }
 }
 
-let ben;
-let uday;
-let lila;
+let walkerAr = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(220);
-  ben = new Walker(300, 600, "red");
-  uday = new Walker(200, 300, "blue");
-  lila = new Walker(1200, 600, "green");
+  spawnWalker()
 }
 
 function draw() {
-  ben.display();
-  uday.display()
-  lila.display()
+  for (let i = 0; i < walkerAr.length; i++) {
+    walkerAr[i].move();
+    walkerAr[i].display();
+  }
+}
 
-  ben.move();
-  uday.move()
-  lila.move()
+function spawnWalker() {
+  let ben = new Walker(width/2, height/2);
+  let someColor = color(random(255), random(255), random(255), 150);
+  ben.color = someColor;
+  walkerAr.push(ben);
+}
+
+function keyPressed() {
+  spawnWalker()
 }
