@@ -6,8 +6,8 @@
 
 let grid = [];
 let newGrid = [];
-let numArx = []
-let numAry = []
+let numArx = [];
+let numAry = [];
 
 let cols = 10; // numbers
 let rows = 10;
@@ -42,8 +42,8 @@ function preload(){
   backg = loadImage("images/background.png");
   startb = loadImage("images/startbp.png");
   pencil = loadImage("images/pencil.png");
-  cross = loadImage("images/cross.png")
-  logo = loadImage("images/logo.png")
+  cross = loadImage("images/cross.png");
+  logo = loadImage("images/logo.png");
 }
 
 function setup() {
@@ -54,7 +54,7 @@ function setup() {
 }
 
 function draw() {
-  cellSize = (height/cols) / 2;
+  cellSize = height/cols / 2;
   mainMenu();
   checkCross();
   drawCross();
@@ -69,7 +69,7 @@ function mainMenu() { // draws main menu
 }
 
 function makeCross(){ // makes empty grid for display
-  grid = []
+  grid = [];
   for (let y = 0; y < cols; y++) {
     grid.push([]);
     for (let x = 0; x < rows; x++) {
@@ -87,7 +87,7 @@ function checkCross(){
 
       if (newGrid[yPos][xPos] === 1 && grid[yPos][xPos] === 0 && mouse === "pencil") { // if space that's supposed to be black is clicked with pencil color it black
         grid[yPos][xPos] = 1;
-        correct ++
+        correct ++;
       }
 
       else if (newGrid[yPos][xPos] === 0 && grid[yPos][xPos] === 0 && mouse === "pencil") { // if space that's supposed to be white is clicked with pencil color it red and add mistake
@@ -107,15 +107,16 @@ function checkCross(){
     }
     if (correct === correctn) { // if your grid is the same as the answer go to next level
       if (progress === 4) {
-        win()
+        win();
       }
-      progress ++
-      makeCross()
-      doLevels()
-      mistakes = 0
+      progress ++;
+      makeCross();
+      doLevels();
+      mistakes = 0;
+      correct = 0;
     }
     if (mistakes === 3) { //if you make 3 mistakes retry
-      state = "end"
+      state = "end";
       gameOver();
     }
   }
@@ -146,7 +147,7 @@ function drawCross(){
           rect(x*cellSize + width/3, y*cellSize + height/4, cellSize, cellSize);
         }
         else if (grid[y][x] === 3 ) { // X space
-          fill("white")
+          fill("white");
           strokeWeight(1);
           rect(x*cellSize + width/3, y*cellSize + height/4, cellSize, cellSize);
           line(x*cellSize + width/3, y*cellSize + height/4, x*cellSize + width/3 + cellSize, y*cellSize + height/4 + cellSize);
@@ -167,23 +168,23 @@ function drawCross(){
 function drawStuff(){
   if (state === "game") {
     makeButton(width/3, height/4 + cellSize * rows, textsize * 6, textsize, 255, 0, textsize, "Mistakes: " + mistakes); // mistake counter
-    makeButton(width/3 + textsize * 3, height/11, textsize * 11, textsize * 3, 255, 0, textsize * 3, "Level " + (progress + 1)); // shows level
+    makeButton(width/3 + textsize * 3, height/15, textsize * 11, textsize * 3, 255, 0, textsize * 3, "Level " + (progress + 1)); // shows level
 
     if (mouse === "pencil") { // if selected change color
-      fill(65, 89, 221)
+      fill(65, 89, 221);
     }
 
-    fill(60, 149, 221)
-    rect(width/3 + cellSize * cols - 220, height/4 + cellSize * rows + 10, 100, 100) //pencil rectangle
-    image(pencil, width/3 + cellSize * cols - 210, height/4 + cellSize * rows + 10, 100, 100) //pencil image
+    fill(60, 149, 221);
+    rect(width/3 + cellSize * cols - 220, height/4 + cellSize * rows + 10, 100, 100); //pencil rectangle
+    image(pencil, width/3 + cellSize * cols - 210, height/4 + cellSize * rows + 10, 100, 100); //pencil image
 
     if (mouse === "cross") {
-      fill(65, 89, 221)
+      fill(65, 89, 221);
     }
 
-    fill(133, 38, 36)
-    rect(width/3 + cellSize * cols - 100, height/4 + cellSize * rows + 10, 100, 100) // cross rectangle
-    image(cross, width/3 + cellSize * cols - 100, height/4 + cellSize * rows + 10, 100, 100) // cross image
+    fill(133, 38, 36);
+    rect(width/3 + cellSize * cols - 100, height/4 + cellSize * rows + 10, 100, 100); // cross rectangle
+    image(cross, width/3 + cellSize * cols - 100, height/4 + cellSize * rows + 10, 100, 100); // cross image
   }
 
 }
@@ -191,10 +192,10 @@ function drawStuff(){
 function drawNumbers(){
   if (state === "game") {
 
-    correctn = 0
+    correctn = 0;
     image(backg, 0, 0, width, height); // background
 
-    textSize(20)
+    textSize(20);
 
     numArx = []; //list of numbers vertically
 
@@ -205,7 +206,7 @@ function drawNumbers(){
       for (let x = 0; x < rows; x++) {
         if (newGrid[y][x] === 1) {
           sum += 1; // adds up consecutive black spaces in the answer
-          correctn ++
+          correctn ++;
           if (x === rows - 1){
             numArx[y].push(sum); // if at end of row push current sum
             sum = 0; // reset sum
@@ -218,7 +219,7 @@ function drawNumbers(){
           sum = 0; //reset sum
         }
       }
-      text(numArx[y], width/3 - 30 * numArx[y].length, height/4 + (cellSize * y) + 30); //writes numbers on side
+      text(numArx[y], width/3 - 30 * numArx[y].length, height/4 + cellSize * y + 30); //writes numbers on side
     }
 
     numAry = []; //list of numbers horizontally
@@ -243,36 +244,36 @@ function drawNumbers(){
           }
           sum = 0;
         }
+        text(numAry[x], width/3 + cellSize * x, height/4 - 30); //writes text SORRY I DIDNT GET TO MAKE IT CLEARER
       }
-      text(numAry[x], width/3 + (cellSize * x), height/4 - 30); //writes text
     }
   }
 }
 
 function gameOver(){
-  state = "lose" //state change
+  state = "lose"; //state change
 
-  fill("white")
-  rect(width/3, height/3, cellSize * cols, cellSize * rows/2) //game over rect
+  fill("white");
+  rect(width/3, height/3, cellSize * cols, cellSize * rows/2); //game over rect
 
-  fill("red")
-  text("You Suck!", width/3 + 10, height/3 + textsize*3) // mean text
+  fill("red");
+  text("You Suck!", width/3 + 10, height/3 + textsize*3); // mean text
 
-  makeButton(width/3 + 10, height/3 + textsize*4, cellSize * cols /2, textsize * 2, "white", "black", textsize * 2, "Retry?" ) // retry button
+  makeButton(width/3 + 10, height/3 + textsize*4, cellSize * cols /2, textsize * 2, "white", "black", textsize * 2, "Retry?" ); // retry button
 }
 
 function win() {
-  fill("white")
-  rect(width/3, height/3, cellSize * cols, cellSize * rows/2) //game over but in a good way rect
+  fill("white");
+  rect(width/3, height/3, cellSize * cols, cellSize * rows/2); //game over but in a good way rect
 
-  fill("yellow")
-  text("you dont suck", width/3 + 10, height/3 + textsize*3) // nice text
+  fill("yellow");
+  text("you dont suck", width/3 + 10, height/3 + textsize*3); // nice text
 }
 
 function keyPressed() {
   if (key === "q"){
     progress ++;
-    doLevels()
+    doLevels();
   }
 }
 
@@ -304,19 +305,19 @@ function mousePressed() {
   if (state === "main" && mouseIn(windowWidth/2 - startb.width/4, windowWidth/2 - startb.width/4 + startb.width/2, windowHeight /1.5, windowHeight /1.5 + startb.height/2)) { //start button
     state = "game";
     image(backg, 0, 0, width, height);
-    doLevels()
+    doLevels();
   }
   else if (state === "game" && mouseIn(width/3 + cellSize * cols - 220, width/3 + cellSize * cols - 120,  height/4 + cellSize * rows + 10,  height/4 + cellSize * rows + 110)) { //pencil button
-    mouse = "pencil"
+    mouse = "pencil";
     image(backg, 0, 0, width, height);
   }
   else if (state === "game" && mouseIn(width/3 + cellSize * cols - 100, width/3 + cellSize * cols, height/4 + cellSize * rows + 10, height/4 + cellSize * rows + 110)) { // cross button
-    mouse = "cross"
+    mouse = "cross";
     image(backg, 0, 0, width, height);
   }
   else if (state === "lose" && mouseIn(width/3 + 10, width/3 + 10 + cellSize * cols /2, height/3 + textsize*4, height/3 + textsize*4 + textsize * 2 )) { // retry button
-    makeCross()
-    mistakes = 0
-    state = "game"
+    makeCross();
+    mistakes = 0;
+    state = "game";
   }
 }
