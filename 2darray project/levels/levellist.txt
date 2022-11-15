@@ -1,2 +1,5 @@
 note
 questionmark
+clover
+arrow
+dollarsign

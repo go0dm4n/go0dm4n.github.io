@@ -2,8 +2,8 @@
 // Schellenberg
 // Oct 27, 2022
 
-const ROWS = 40;
-const COLS = 40;
+const ROWS = 10;
+const COLS = 10;
 let grid;
 let cellWidth;
 let cellHeight;
