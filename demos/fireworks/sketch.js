@@ -1,37 +1,37 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Fireworks OOP
+
 class Particle {
   constructor(x, y) {
     this.x = x;
     this.y = y;
     this.dx = random(-5, 5);
     this.dy = random(-5, 5);
-    this.diameter = 2;
+    this.diameter = 5;
     this.r = 255;
     this.g = 0;
     this.b = 0;
-    this.a = 255;
-    this.color = color(this.r, this.g, this.b, this.a);
-  }
-
-  move(){
-    this.dx += this.dx;
-    this.dy += this.dy;
+    this.alpha = 255;
+    this.color = color(this.r, this.g, this.b, this.alpha);
   }
 
   update() {
-    this.a --;
-    this.color = color(this.r, this.g, this.b, this.a)
+    //move
+    this.x += this.dx;
+    this.y += this.dy;
+
+    //making it more transparent
+    this.alpha--;
+    this.color = color(this.r, this.g, this.b, this.alpha);
   }
 
-  display(){
+  display() {
     fill(this.color);
     stroke(this.color);
     circle(this.x, this.y, this.diameter);
+  }
+
+  isDead() {
+    return this.alpha <= 0;
   }
 }
 
@@ -42,16 +42,20 @@ function setup() {
 }
 
 function draw() {
-  background(220);
-  for (let i = 0; i < theFireworks.length; i++) {
-    theFireworks[i].move();
-    theFireworks.update()
-    theFireworks[i].display();
+  background("black");
+  for (let i = theFireworks.length; i >= 0; i--) {
+    theFireworks[i].update();
+    if (theFireworks[i].isDead()) {
+      theFireworks.splice(i, 1);
+    }
+    else {
+      theFireworks[i].display();
+    }
   }
 }
 
 function mousePressed() {
-  for (let i=0; i < 100; i++) {
+  for (let i = 0; i < 100; i++) {
     let someParticle = new Particle(mouseX, mouseY);
     theFireworks.push(someParticle);
   }
